@@ -1,3 +1,4 @@
 ollama
 tqdm
 requests
+giskard

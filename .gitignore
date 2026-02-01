@@ -35,3 +35,4 @@ Thumbs.db
 
 # Large files - optional
 # codes/ - comment out if you want to commit code files
+.env
