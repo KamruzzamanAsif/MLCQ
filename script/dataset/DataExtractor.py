@@ -45,11 +45,12 @@ def process_csv_and_save_to_json(csv_file, json_file,batch_size=50):
         
         next(f)
 
-        for i, line in tqdm(enumerate(f), desc="Fetching code snippets"):
-            if i in existing_ids:
-                continue
+        for _, line in tqdm(enumerate(f), desc="Fetching code snippets"):
             parts = line.strip().split(";")
-            _, _, _, smell, severity, _, type, code_name, repo_url, commit_hash, file_path, start_line, end_line, _, _ = parts
+            dataset_id, _, _, smell, severity, _, type, code_name, repo_url, commit_hash, file_path, start_line, end_line, _, _ = parts
+            dataset_id = int(dataset_id)
+            if dataset_id in existing_ids:
+                continue
             
             start_line = int(start_line)
             end_line = int(end_line)
@@ -58,7 +59,7 @@ def process_csv_and_save_to_json(csv_file, json_file,batch_size=50):
             
             if code_snippet:
                 json_data.append({
-                    "id": i,
+                    "id": dataset_id,
                     "repo_url": repo_url,
                     "commit_hash": commit_hash,
                     "file_path": file_path,
