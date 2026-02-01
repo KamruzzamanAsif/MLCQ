@@ -22,6 +22,6 @@ def filter_by_min_lines(input_json: Path, output_json: Path, min_lines: int = 5)
 
 
 if __name__ == "__main__":
-    input_json = Path("MLCQCodeSmellSamples.json")
+    input_json = Path("MLCQCodeSmellSamples_Updated.json")
     output_json = Path("MLCQCodeSmellSamples_min5lines.json")
     filter_by_min_lines(input_json, output_json, min_lines=5)
