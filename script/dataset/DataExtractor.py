@@ -39,12 +39,15 @@ def process_csv_and_save_to_json(csv_file, json_file,batch_size=50):
     request_count = 0
     json_data = []
     counter = 0
+    existing_ids = load_existing_ids(json_file)
 
     with open(csv_file, 'r') as f:
         
         next(f)
 
         for i, line in tqdm(enumerate(f), desc="Fetching code snippets"):
+            if i in existing_ids:
+                continue
             parts = line.strip().split(";")
             _, _, _, smell, severity, _, type, code_name, repo_url, commit_hash, file_path, start_line, end_line, _, _ = parts
             
@@ -90,6 +93,15 @@ def save_json_data(json_file, json_data):
         json.dump(existing_data, f, indent=4)
 
     print(f"Saved batch of {len(json_data)} entries to {json_file}")
+
+
+def load_existing_ids(json_file):
+    try:
+        with open(json_file, 'r') as f:
+            existing_data = json.load(f)
+        return {entry.get("id") for entry in existing_data if "id" in entry}
+    except (FileNotFoundError, json.JSONDecodeError):
+        return set()
 
 
 if __name__ == '__main__':
