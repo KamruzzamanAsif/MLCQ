@@ -2,3 +2,4 @@ ollama
 tqdm
 requests
 giskard
+pandas

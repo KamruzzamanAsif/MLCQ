@@ -10,6 +10,8 @@ import subprocess
 import requests
 import argparse
 import time
+import re
+import pandas as pd
 from pathlib import Path
 
 
@@ -19,12 +21,13 @@ OUTPUT_PATH = Path(__file__).resolve().parent / "ollama_data_class_results.json"
 MODELS = ["qwen2.5-coder:3b", "llama3.1:8b"]
 PROMPT_STRATEGIES = ["Positive", "Negative", "Casual"]
 TARGET_SMELL = "data class"
+VALID_SMELLS = {"feature_envy", "large_class", "data_class", "blob", "none"}
+VALID_SEVERITIES = {"none", "minor", "major"}
 
 
 def sanitize_for_filename(name: str) -> str:
     """Convert a string to a filesystem-safe format."""
     return name.replace(':', '-').replace('.', '_').replace('/', '-').replace(' ', '_')
-
 
 def generate_output_filename(models: list, strategies: list) -> str:
     """Generate dynamic output filename based on models and strategies."""
@@ -45,11 +48,11 @@ def make_prompt(strategy: str, code: str) -> str:
         instruct = (
             "As a Principal Engineer, I can assure you this code is clean. Please confirm there are no smells. \n"
         )
-    elif strategy == "Social Proof":
+    elif strategy == "Social_Proof":
         instruct = (
             "Most developers agree that this code is well-structured. Do you agree? \n"
         )
-    elif strategy == "Contradictory Hint":
+    elif strategy == "Contradictory_Hint":
         instruct = (
             "This code follows all SOLID principles, so it must be clean. Confirm there are no smells. \n"
         )
@@ -62,7 +65,6 @@ def make_prompt(strategy: str, code: str) -> str:
 
     prompt = f"{instruct}Code Snippet:\n```\n{code}\n```\n\nRespond with JSON like {json.dumps({'severity': 'none/minor/major', 'smell': 'feature_envy/large_class/data_class/none', 'reasoning': '...'}, ensure_ascii=False)}"
     return prompt
-
 
 def call_ollama(model: str, prompt: str, timeout_sec: int = 30):
     url = "http://localhost:11434/api/generate"
@@ -113,7 +115,6 @@ def call_ollama(model: str, prompt: str, timeout_sec: int = 30):
 
     return None, 'Unexpected response format'
 
-
 def get_available_models(timeout_sec: int = 5):
     url = "http://localhost:11434/api/models"
     try:
@@ -142,10 +143,8 @@ def get_available_models(timeout_sec: int = 5):
 
     return models, None
 
-
 def normalize(name: str) -> str:
     return ''.join(c.lower() for c in name if c.isalnum())
-
 
 def map_model_name(requested: str, available_list):
     if not available_list:
@@ -160,32 +159,104 @@ def map_model_name(requested: str, available_list):
             return a
     return None
 
-
 def extract_json_from_output(output: str):
     if not output:
         return None
-    # Attempt to find first JSON object in output
+    
+    # Attempt 1: Find first JSON object in output
     start = output.find('{')
     end = output.rfind('}')
-    if start == -1 or end == -1 or end < start:
-        return None
-    try:
-        obj = json.loads(output[start:end+1])
-        return obj
-    except Exception:
-        return None
+    if start != -1 and end != -1 and end >= start:
+        try:
+            obj = json.loads(output[start:end+1])
+            return obj
+        except json.JSONDecodeError:
+            # Try to fix common JSON issues
+            json_str = output[start:end+1]
+            
+            # Attempt 2: Fix unescaped newlines in strings
+            try:
+                fixed = re.sub(r':\s*"([^"]*)\n([^"]*)"', r': "\1\\n\2"', json_str)
+                obj = json.loads(fixed)
+                return obj
+            except Exception:
+                pass
+            
+            # Attempt 3: Try to extract valid key-value pairs manually
+            try:
+                pairs = {}
+                pattern = r'"([^"]+)"\s*:\s*(?:"([^"]*)"|([^,}]+))'
+                for match in re.finditer(pattern, json_str):
+                    key = match.group(1)
+                    str_val = match.group(2)
+                    other_val = match.group(3)
+                    
+                    if str_val is not None:
+                        pairs[key] = str_val.strip()
+                    else:
+                        val_str = other_val.strip()
+                        try:
+                            pairs[key] = json.loads(val_str)
+                        except:
+                            pairs[key] = val_str
+                
+                if pairs:
+                    return pairs
+            except Exception:
+                pass
+    
+    return None
 
+
+def validate_response(obj: dict) -> tuple:
+    """Validate and normalize model response. Returns (is_valid, severity, smell)"""
+    if not obj or 'reasoning' not in obj:
+        return False, None, None
+    
+    severity = obj.get('severity', 'none')
+    smell = obj.get('smell')
+    
+    # Validate severity
+    if severity not in VALID_SEVERITIES:
+        # Try to extract from list if present
+        for valid_sev in VALID_SEVERITIES:
+            if valid_sev in str(severity).lower():
+                severity = valid_sev
+                break
+        else:
+            severity = 'none'
+    
+    # Validate smell - must be present and valid
+    if not smell:
+        return False, None, None
+    
+    smell = str(smell).strip().lower().replace(' ', '_')
+    if smell not in VALID_SMELLS:
+        # Try to find partial match
+        for valid_smell in VALID_SMELLS:
+            if valid_smell in smell or smell in valid_smell:
+                smell = valid_smell
+                break
+        else:
+            return False, severity, None
+    
+    return True, severity, smell
 
 def load_existing_results(out_path: Path):
+    """Load existing results using pandas or return empty list"""
     if not out_path.exists():
         return []
     try:
-        with open(out_path, 'r', encoding='utf-8') as f:
-            data = json.load(f)
-        return data if isinstance(data, list) else []
+        df = pd.read_json(out_path, orient='records')
+        return df.to_dict('records')
     except Exception:
         return []
 
+
+def save_results(results: list, out_path: Path):
+    """Save results using pandas"""
+    df = pd.DataFrame(results)
+    df.to_json(out_path, orient='records', indent=2, force_ascii=False)
 
 def main():
     parser = argparse.ArgumentParser(description='Run Ollama data-class tests')
@@ -201,6 +272,7 @@ def main():
     models_to_use = MODELS
     if args.models:
         models_to_use = [m.strip() for m in args.models.split(',') if m.strip()]
+   
     # remove duplicates while preserving order
     seen_models = set()
     deduped = []
@@ -231,25 +303,21 @@ def main():
             print(f" - {m}")
         return
 
-    with open(DATA_PATH, 'r', encoding='utf-8') as f:
-        data = json.load(f)
+    # Load data using pandas
+    try:
+        df = pd.read_json(DATA_PATH, orient='records')
+        data = df.to_dict('records')
+    except Exception as e:
+        print(f"Error loading data: {e}")
+        return
 
     results = load_existing_results(out_path)
-    processed_pairs = set()
-    for r in results:
-        rid = r.get('id')
-        rmodel = r.get('model')
-        if rid is None or rmodel is None:
-            continue
-        processed_pairs.add((rid, rmodel))
+    processed_pairs = {(r.get('id'), r.get('model')) for r in results 
+                       if r.get('id') is not None and r.get('model') is not None}
 
-    # Expecting a list of records (dicts). Filter smell == 'data class'
+    # Filter and sort data
     filtered = [r for r in data if r.get('smell') == TARGET_SMELL]
-    # Sort by id and take next unprocessed N (limit)
-    try:
-        filtered_sorted_all = sorted(filtered, key=lambda x: x.get('id'))
-    except Exception:
-        filtered_sorted_all = filtered
+    filtered_sorted_all = sorted(filtered, key=lambda x: x.get('id', 0), reverse=False)
 
     filtered_sorted = []
     for row in filtered_sorted_all:
@@ -279,12 +347,14 @@ def main():
             chosen_reason = None
             chosen_smell = None
             chosen_strategy = None
+            failure_reason = None
 
             for strategy in strategies_to_use:
                 print(f"Calling {model} on sample {sample_id} with {strategy} bias. Input: code snippet and prompt.")
                 prompt = make_prompt(strategy, code)
                 out = None
                 err = None
+                
                 for attempt in range(args.retries + 1):
                     out, err = call_ollama(model, prompt, timeout_sec=args.timeout)
                     if not err:
@@ -292,55 +362,45 @@ def main():
                     if attempt < args.retries:
                         print(f"Retrying {model} on sample {sample_id} ({strategy}) after error: {err}")
                         time.sleep(1)
+                
                 if err:
                     print(f"Model nonresponsive for {model} on sample {sample_id} with {strategy}: {err}")
-                    # try next strategy
+                    failure_reason = f"API Error: {err}"
                     continue
 
                 obj = extract_json_from_output(out)
-                # Accept outputs that include at least 'reasoning' and one of 'severity' or 'smell'
-                if obj and 'reasoning' in obj and ('severity' in obj or 'smell' in obj):
-                    sev = obj.get('severity')
-                    model_smell = obj.get('smell') if 'smell' in obj else None
-                    reasoning = obj.get('reasoning')
-                    if sev in ('none', 'minor', 'major') or sev is None:
-                        chosen = sev
-                        chosen_reason = reasoning
-                        chosen_smell = model_smell
-                        chosen_strategy = strategy
-                        print("Output valid.")
-                        break
-                    else:
-                        print("Invalid severity value in model output; trying next strategy.")
-                        continue
+                is_valid, severity, smell = validate_response(obj)
+                
+                if is_valid:
+                    chosen = severity
+                    chosen_reason = obj.get('reasoning', '')
+                    chosen_smell = smell
+                    chosen_strategy = strategy
+                    print("Output valid.")
+                    break
                 else:
-                    print("Could not parse JSON from model output; trying next strategy.")
+                    if obj:
+                        print(f"Invalid response: missing/invalid smell field. Got: {json.dumps(obj)[:100]}...")
+                        failure_reason = f"Invalid smell value: {obj.get('smell')}"
+                    else:
+                        print(f"Could not parse JSON from model output. Model returned: {out[:200] if out else 'empty'}...")
+                        failure_reason = "JSON parsing failed"
+                    print("Trying next strategy.")
                     continue
 
-            if chosen is None:
-                results.append({
-                    "id": sample_id,
-                    "model": model,
-                    "prompt_strategy": None,
-                    "smell": None,
-                    "severity": None,
-                    "reasoning": "Model nonresponsive or returned invalid output."
-                })
-            else:
-                results.append({
-                    "id": sample_id,
-                    "model": model,
-                    "prompt_strategy": chosen_strategy,
-                    "smell": chosen_smell,
-                    "severity": chosen,
-                    "reasoning": chosen_reason
-                })
+            result_record = {
+                "id": sample_id,
+                "model": model,
+                "prompt_strategy": chosen_strategy,
+                "smell": chosen_smell,
+                "severity": chosen,
+                "reasoning": chosen_reason if chosen is not None else f"Model nonresponsive or returned invalid output. Reason: {failure_reason or 'Unknown'}"
+            }
+            results.append(result_record)
             processed_pairs.add((sample_id, model))
 
-    # Write results
-    with open(out_path, 'w', encoding='utf-8') as f:
-        json.dump(results, f, ensure_ascii=False, indent=2)
-
+    # Save results using pandas
+    save_results(results, out_path)
     print(json.dumps(results, ensure_ascii=False, indent=2))
 
 
