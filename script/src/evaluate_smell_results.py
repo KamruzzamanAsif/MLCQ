@@ -81,30 +81,33 @@ def compute_metrics_per_smell(y_true: List[str], y_pred: List[str]) -> Dict[str,
     """
     Compute metrics for each smell separately.
     Returns: {smell: (count, accuracy, precision, recall, f1)}
+    Where count is the number of true instances of that smell.
+    accuracy is the proportion of correct predictions among the true instances of that smell (i.e., recall).
     """
     if not y_true:
         return {}
     
-    smells = set(y_true) | set(y_pred)
+    smells = set(y_true)
     results = {}
     
     for smell in smells:
-        y_true_smell = [t for t, p, ts in zip(y_true, y_pred, y_true) if ts == smell]
-        y_pred_smell = [p for t, p, ts in zip(y_true, y_pred, y_true) if ts == smell]
+        # True positives: predicted correctly as this smell
+        tp = sum(1 for t, p in zip(y_true, y_pred) if t == smell and p == smell)
+        # False positives: predicted as this smell but was something else
+        fp = sum(1 for t, p in zip(y_true, y_pred) if t != smell and p == smell)
+        # False negatives: was this smell but predicted as something else
+        fn = sum(1 for t, p in zip(y_true, y_pred) if t == smell and p != smell)
         
-        if not y_true_smell:
+        count = tp + fn  # number of true instances
+        if count == 0:
             continue
         
-        tp = sum(1 for t, p in zip(y_true_smell, y_pred_smell) if t == p)
-        fp = sum(1 for t, p in zip(y_true_smell, y_pred_smell) if t != p and p == smell)
-        fn = sum(1 for t, p in zip(y_true_smell, y_pred_smell) if t != p and t == smell)
-        
-        accuracy = tp / len(y_true_smell)
+        accuracy = tp / count  # this is actually recall
         precision = tp / (tp + fp) if (tp + fp) > 0 else 0.0
         recall = tp / (tp + fn) if (tp + fn) > 0 else 0.0
         f1 = (2 * precision * recall / (precision + recall)) if (precision + recall) > 0 else 0.0
         
-        results[smell] = (len(y_true_smell), accuracy, precision, recall, f1)
+        results[smell] = (count, accuracy, precision, recall, f1)
     
     return results
 

@@ -24,10 +24,10 @@ mkdir -p "$RESULTS_DIR"
 
 
 # Default values
-SMELL="data class"
-MODELS="qwen2.5-coder:7b"
-STRATEGIES="False-Premise"
-LIMIT=3
+SMELL="feature envy"
+MODELS="llama3.1:8b"
+STRATEGIES="Casual"
+LIMIT=10
 OUTPUT=""
 TIMEOUT=60
 RETRIES=2
