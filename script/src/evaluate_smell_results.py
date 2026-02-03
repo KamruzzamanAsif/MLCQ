@@ -180,12 +180,18 @@ def save_to_csv(rows: List[Tuple[str, str, int, float, float, float, float]], cs
             model, strategy, n, acc, prec, rec, f1 = r
             writer.writerow([model, strategy, n, f"{acc:.4f}", f"{prec:.4f}", f"{rec:.4f}", f"{f1:.4f}"])
 
+def sanitize_strategy_name(strategy: str) -> str:
+    """Convert strategy name for safe filesystem usage (underscore to hyphen)."""
+    return strategy.replace("_", "-")
+
 def save_per_smell_csv(model: str, strategy: str, smell_metrics: Dict[str, Tuple[int, float, float, float, float]], base_dir: Path) -> None:
-    """Save per-smell evaluation results to separate CSV files in smell-specific directories."""
+    """Save per-smell evaluation results organized by smell, with strategy-specific files."""
+    sanitized_strategy = sanitize_strategy_name(strategy)
     for smell, (n, acc, prec, rec, f1) in smell_metrics.items():
+        # Organize by smell first
         smell_dir = base_dir / smell
         smell_dir.mkdir(parents=True, exist_ok=True)
-        csv_path = smell_dir / f"eval_{model}_{strategy}.csv"
+        csv_path = smell_dir / f"eval_{model}_{sanitized_strategy}.csv"
         
         headers = ["Model", "Strategy", "N", "Accuracy", "Precision", "Recall", "F1"]
         with csv_path.open("w", newline="", encoding="utf-8") as csvfile:
@@ -264,34 +270,52 @@ def main() -> None:
         print(f"No results files found with pattern: {args.results_glob} in {results_dir}")
         return
 
-    rows = []
-    per_smell_data = {}  # For organizing per-smell results
+    # Group results by strategy
+    strategy_results = {}  # strategy -> list of (results_path, evaluation_result)
     
     for results_path in results_files:
         result = evaluate_results(dataset_smells, results_path)
         model, strategy, n, acc, prec, rec, f1, y_true, y_pred = result
-        rows.append((model, strategy, n, acc, prec, rec, f1))
         
-        # Compute per-smell metrics
-        smell_metrics = compute_metrics_per_smell(y_true, y_pred)
-        if model not in per_smell_data:
-            per_smell_data[model] = {}
-        per_smell_data[model][strategy] = smell_metrics
+        if strategy not in strategy_results:
+            strategy_results[strategy] = []
+        strategy_results[strategy].append((results_path, result))
 
-    print_table(rows)
-    
-    # Save to CSV if requested
-    if args.output_csv:
-        csv_path = Path(args.output_csv)
-        save_to_csv(rows, csv_path)
-        print(f"\nResults saved to CSV: {csv_path}")
+    # Process each strategy separately
+    for strategy, results_list in strategy_results.items():
+        print(f"\n=== Evaluating Strategy: {strategy} ===")
         
-        # Save per-smell results in separate directories
-        base_output_dir = csv_path.parent / "per_smell_results"
-        for model, strategies in per_smell_data.items():
-            for strategy, smell_metrics in strategies.items():
-                save_per_smell_csv(model, strategy, smell_metrics, base_output_dir)
-        print(f"Per-smell results saved to: {base_output_dir}")
+        rows = []
+        per_smell_data = {}  # model -> smell_metrics
+        
+        for results_path, result in results_list:
+            model, _, n, acc, prec, rec, f1, y_true, y_pred = result
+            rows.append((model, strategy, n, acc, prec, rec, f1))
+            
+            # Compute per-smell metrics
+            smell_metrics = compute_metrics_per_smell(y_true, y_pred)
+            if model not in per_smell_data:
+                per_smell_data[model] = {}
+            per_smell_data[model].update(smell_metrics)
+
+        print_table(rows)
+        
+        # Save to CSV if requested
+        if args.output_csv:
+            csv_path = Path(args.output_csv)
+            # Create strategy-specific filename with sanitized strategy name
+            sanitized_strategy = sanitize_strategy_name(strategy)
+            # Construct filename: evaluation_<smell>_<strategy>.csv
+            base_name = csv_path.stem  # e.g., "evaluation_blob"
+            strategy_csv_path = csv_path.parent / f"{base_name}_{sanitized_strategy}{csv_path.suffix}"
+            save_to_csv(rows, strategy_csv_path)
+            print(f"\nResults for {strategy} saved to CSV: {strategy_csv_path}")
+            
+            # Save per-smell results organized by smell
+            base_per_smell_dir = csv_path.parent / "per_smell_results"
+            for model, smell_metrics in per_smell_data.items():
+                save_per_smell_csv(model, strategy, smell_metrics, base_per_smell_dir)
+            print(f"Per-smell results for {strategy} saved to: {base_per_smell_dir}")
 
 
 if __name__ == "__main__":

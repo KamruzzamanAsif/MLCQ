@@ -20,14 +20,14 @@ mkdir -p "$RESULTS_DIR"
 #   - --smell "all"                        → Blind detection (tests any smell)
 #   - --smell "blob"                       → Ground-truth validation (only blob data)
 #   - --smell "blob" --mixed-dataset       → Cross-smell validation (all data, test for blob)
-# Available Strategies: "Positive", "Negative", "Authoritative", "Social_Proof", "Contradictory_Hint", "False_Premise", "Casual", "Confirmation_Bias"
+# Available Strategies: "Positive", "Negative", "Authoritative", "Social-Proof", "Contradictory-Hint", "False-Premise", "Casual", "Confirmation-Bias"
 
 
 # Default values
-SMELL="feature envy"
-MODELS="llama3.1:8b"
-STRATEGIES="Authoritative"
-LIMIT=10
+SMELL="data class"
+MODELS="qwen2.5-coder:7b"
+STRATEGIES="False-Premise"
+LIMIT=3
 OUTPUT=""
 TIMEOUT=60
 RETRIES=2
@@ -35,7 +35,7 @@ DATASET="${PARENT_DIR}/dataset/MLCQCodeSmellSamples_min5lines.json"
 SKIP_EVAL=false
 SKIP_TEST=false
 LIST_MODELS=false
-MIXED_DATASET=false
+MIXED_DATASET=true
 TEMPERATURE=""
 TOP_P=""
 FREQUENCY_PENALTY=""
@@ -63,6 +63,11 @@ print_warning() {
 
 print_error() {
     echo -e "${RED}✗${NC} $1"
+}
+
+# Helper function to sanitize strategy name (underscore to hyphen)
+sanitize_strategy() {
+    echo "$1" | tr '_' '-'
 }
 
 # Help function
@@ -393,11 +398,12 @@ if [ "$SKIP_EVAL" = false ]; then
     print_info "━━━ Running Evaluation ━━━"
     echo ""
     
-    # Generate CSV filename based on smell and strategies
-    CSV_FILENAME="evaluation_${SMELL// /_}_$(echo $STRATEGIES | tr ',' '_').csv"
+    # Generate base CSV filename based on smell only (strategies will be appended per strategy)
+    SANITIZED_SMELL="${SMELL// /_}"
+    CSV_FILENAME="evaluation_${SANITIZED_SMELL}.csv"
     CSV_PATH="$RESULTS_DIR/$CSV_FILENAME"
     
-    EVAL_CMD="python3 \"$SCRIPT_DIR/evaluate_smell_results.py\" --dataset \"$DATASET\" --results-dir \"$RESULTS_DIR\" --results-glob \"ollama_results_${SMELL// /_}_*.json\" --output-csv \"$CSV_PATH\""
+    EVAL_CMD="python3 \"$SCRIPT_DIR/evaluate_smell_results.py\" --dataset \"$DATASET\" --results-dir \"$RESULTS_DIR\" --results-glob \"ollama_results_${SANITIZED_SMELL}_*.json\" --output-csv \"$CSV_PATH\""
     
     print_info "Command: $EVAL_CMD"
     echo ""
