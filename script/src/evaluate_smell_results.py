@@ -64,11 +64,49 @@ def compute_metrics(y_true: List[str], y_pred: List[str]) -> Tuple[float, float,
         recalls.append(recall)
         f1s.append(f1)
 
+    # print the confusion matrix smell wise correctly predicted counts
+    print("Confusion Matrix (smell wise correct predictions):")
+    print("Label\t\t\tTP\tFP\tFN")
+    for label in labels:
+        print(f"{label}\t\t{tp[label]}\t{fp[label]}\t{fn[label]}")
+
     precision_macro = sum(precisions) / len(precisions)
     recall_macro = sum(recalls) / len(recalls)
     f1_macro = sum(f1s) / len(f1s)
 
     return accuracy, precision_macro, recall_macro, f1_macro
+
+
+def compute_metrics_per_smell(y_true: List[str], y_pred: List[str]) -> Dict[str, Tuple[int, float, float, float, float]]:
+    """
+    Compute metrics for each smell separately.
+    Returns: {smell: (count, accuracy, precision, recall, f1)}
+    """
+    if not y_true:
+        return {}
+    
+    smells = set(y_true) | set(y_pred)
+    results = {}
+    
+    for smell in smells:
+        y_true_smell = [t for t, p, ts in zip(y_true, y_pred, y_true) if ts == smell]
+        y_pred_smell = [p for t, p, ts in zip(y_true, y_pred, y_true) if ts == smell]
+        
+        if not y_true_smell:
+            continue
+        
+        tp = sum(1 for t, p in zip(y_true_smell, y_pred_smell) if t == p)
+        fp = sum(1 for t, p in zip(y_true_smell, y_pred_smell) if t != p and p == smell)
+        fn = sum(1 for t, p in zip(y_true_smell, y_pred_smell) if t != p and t == smell)
+        
+        accuracy = tp / len(y_true_smell)
+        precision = tp / (tp + fp) if (tp + fp) > 0 else 0.0
+        recall = tp / (tp + fn) if (tp + fn) > 0 else 0.0
+        f1 = (2 * precision * recall / (precision + recall)) if (precision + recall) > 0 else 0.0
+        
+        results[smell] = (len(y_true_smell), accuracy, precision, recall, f1)
+    
+    return results
 
 
 def extract_strategy_name(results_path: Path, results: List[dict]) -> str:
@@ -82,10 +120,10 @@ def extract_strategy_name(results_path: Path, results: List[dict]) -> str:
     return parts[-1] if parts else stem
 
 
-def evaluate_results(dataset_smells: Dict[int, str], results_path: Path) -> Tuple[str, int, float, float, float, float]:
+def evaluate_results(dataset_smells: Dict[int, str], results_path: Path) -> Tuple[str, str, int, float, float, float, float]:
     """
     Evaluate results from a detection file against ground truth.
-    Returns: (strategy_name, num_evaluated_samples, accuracy, precision, recall, f1)
+    Returns: (model_name, strategy_name, num_evaluated_samples, accuracy, precision, recall, f1)
     
     Note: num_evaluated_samples = number of samples with valid ground truth that were evaluated.
     This may be less than total results if some samples are not in the dataset.
@@ -95,8 +133,13 @@ def evaluate_results(dataset_smells: Dict[int, str], results_path: Path) -> Tupl
     y_pred: List[str] = []
     skipped_count = 0
     invalid_id_count = 0
+    model_name = "unknown"
 
     for row in results:
+        # Extract model name from first row
+        if model_name == "unknown" and row.get("model"):
+            model_name = row.get("model")
+        
         sample_id = row.get("id")
         if sample_id is None:
             invalid_id_count += 1
@@ -123,29 +166,42 @@ def evaluate_results(dataset_smells: Dict[int, str], results_path: Path) -> Tupl
     if skipped_count > 0 or invalid_id_count > 0:
         print(f"  Note: Skipped {skipped_count} samples not in ground truth, {invalid_id_count} with invalid IDs")
     
-    return strategy, len(y_true), accuracy, precision, recall, f1
+    return model_name, strategy, len(y_true), accuracy, precision, recall, f1, y_true, y_pred
 
 
-def save_to_csv(rows: List[Tuple[str, int, float, float, float, float]], csv_path: Path) -> None:
+def save_to_csv(rows: List[Tuple[str, str, int, float, float, float, float]], csv_path: Path) -> None:
     """Save evaluation results to CSV file."""
     csv_path.parent.mkdir(parents=True, exist_ok=True)
-    headers = ["Strategy", "N", "Accuracy", "Precision(Macro)", "Recall(Macro)", "F1(Macro)"]
+    headers = ["Model", "Strategy", "N", "Accuracy", "Precision(Macro)", "Recall(Macro)", "F1(Macro)"]
     with csv_path.open("w", newline="", encoding="utf-8") as csvfile:
         writer = csv.writer(csvfile)
         writer.writerow(headers)
         for r in rows:
-            strategy, n, acc, prec, rec, f1 = r
-            writer.writerow([strategy, n, f"{acc:.4f}", f"{prec:.4f}", f"{rec:.4f}", f"{f1:.4f}"])
+            model, strategy, n, acc, prec, rec, f1 = r
+            writer.writerow([model, strategy, n, f"{acc:.4f}", f"{prec:.4f}", f"{rec:.4f}", f"{f1:.4f}"])
 
+def save_per_smell_csv(model: str, strategy: str, smell_metrics: Dict[str, Tuple[int, float, float, float, float]], base_dir: Path) -> None:
+    """Save per-smell evaluation results to separate CSV files in smell-specific directories."""
+    for smell, (n, acc, prec, rec, f1) in smell_metrics.items():
+        smell_dir = base_dir / smell
+        smell_dir.mkdir(parents=True, exist_ok=True)
+        csv_path = smell_dir / f"eval_{model}_{strategy}.csv"
+        
+        headers = ["Model", "Strategy", "N", "Accuracy", "Precision", "Recall", "F1"]
+        with csv_path.open("w", newline="", encoding="utf-8") as csvfile:
+            writer = csv.writer(csvfile)
+            writer.writerow(headers)
+            writer.writerow([model, strategy, n, f"{acc:.4f}", f"{prec:.4f}", f"{rec:.4f}", f"{f1:.4f}"])
 
-def print_table(rows: List[Tuple[str, int, float, float, float, float]]) -> None:
-    headers = ["Strategy", "N", "Accuracy", "Precision(Macro)", "Recall(Macro)", "F1(Macro)"]
+def print_table(rows: List[Tuple[str, str, int, float, float, float, float]]) -> None:
+    headers = ["Model", "Strategy", "N", "Accuracy", "Precision(Macro)", "Recall(Macro)", "F1(Macro)"]
     col_widths = [len(h) for h in headers]
 
     formatted_rows = []
     for r in rows:
-        strategy, n, acc, prec, rec, f1 = r
+        model, strategy, n, acc, prec, rec, f1 = r
         row = [
+            str(model),
             str(strategy),
             str(n),
             f"{acc:.4f}",
@@ -165,7 +221,7 @@ def print_table(rows: List[Tuple[str, int, float, float, float, float]]) -> None
     for row in formatted_rows:
         print(fmt_row(row))
     
-    print("\nNote: N = number of samples successfully matched to ground truth")
+    print("\nNote: N = total evaluated samples (may be less than total results if some samples are missing in ground truth).")
 
 
 def main() -> None:
@@ -209,8 +265,18 @@ def main() -> None:
         return
 
     rows = []
+    per_smell_data = {}  # For organizing per-smell results
+    
     for results_path in results_files:
-        rows.append(evaluate_results(dataset_smells, results_path))
+        result = evaluate_results(dataset_smells, results_path)
+        model, strategy, n, acc, prec, rec, f1, y_true, y_pred = result
+        rows.append((model, strategy, n, acc, prec, rec, f1))
+        
+        # Compute per-smell metrics
+        smell_metrics = compute_metrics_per_smell(y_true, y_pred)
+        if model not in per_smell_data:
+            per_smell_data[model] = {}
+        per_smell_data[model][strategy] = smell_metrics
 
     print_table(rows)
     
@@ -219,6 +285,13 @@ def main() -> None:
         csv_path = Path(args.output_csv)
         save_to_csv(rows, csv_path)
         print(f"\nResults saved to CSV: {csv_path}")
+        
+        # Save per-smell results in separate directories
+        base_output_dir = csv_path.parent / "per_smell_results"
+        for model, strategies in per_smell_data.items():
+            for strategy, smell_metrics in strategies.items():
+                save_per_smell_csv(model, strategy, smell_metrics, base_output_dir)
+        print(f"Per-smell results saved to: {base_output_dir}")
 
 
 if __name__ == "__main__":

@@ -3,8 +3,6 @@
 # Central Script for Testing Prompt Sycophancy
 # This script runs code smell detection with various prompt strategies
 # and evaluates their effectiveness at detecting code smells.
-# Available Models: qwen2.5-coder:7b, llama3.1:8b, deepseek-r1:8b
-# Available Smells: feature envy, data class, blob, long method
 
 set -e
 
@@ -16,11 +14,20 @@ RESULTS_DIR="$PARENT_DIR/../results"
 # Create results directory if it doesn't exist
 mkdir -p "$RESULTS_DIR"
 
+# Available Models: qwen2.5-coder:7b, llama3.1:8b, deepseek-r1:8b
+# Available Smells: feature envy, data class, blob, long method or all
+# Detection Modes:
+#   - --smell "all"                        → Blind detection (tests any smell)
+#   - --smell "blob"                       → Ground-truth validation (only blob data)
+#   - --smell "blob" --mixed-dataset       → Cross-smell validation (all data, test for blob)
+# Available Strategies: "Positive", "Negative", "Authoritative", "Social_Proof", "Contradictory_Hint", "False_Premise", "Casual", "Confirmation_Bias"
+
+
 # Default values
-SMELL="blob"
+SMELL="feature envy"
 MODELS="llama3.1:8b"
-STRATEGIES="Casual"
-LIMIT=5
+STRATEGIES="Authoritative"
+LIMIT=10
 OUTPUT=""
 TIMEOUT=60
 RETRIES=2
@@ -28,6 +35,11 @@ DATASET="${PARENT_DIR}/dataset/MLCQCodeSmellSamples_min5lines.json"
 SKIP_EVAL=false
 SKIP_TEST=false
 LIST_MODELS=false
+MIXED_DATASET=false
+TEMPERATURE=""
+TOP_P=""
+FREQUENCY_PENALTY=""
+PRESENCE_PENALTY=""
 
 # Color codes for output
 GREEN='\033[0;32m'
@@ -96,6 +108,22 @@ OPTIONS:
 
     --skip-test                         Skip detection step, only run evaluation
 
+    --mixed-dataset                     Use cross-smell validation mode
+                                        Uses all data samples while testing for specific smell
+                                        (only with specific --smell, not with "all")
+
+    --temperature <value>               Temperature for model sampling (0.0-2.0, optional)
+                                        (default: not set, uses Ollama default)
+
+    --top-p <value>                     Top-p (nucleus) sampling parameter (0.0-1.0, optional)
+                                        (default: not set, uses Ollama default)
+
+    --frequency-penalty <value>         Frequency penalty parameter (0.0-2.0, optional)
+                                        (default: not set, uses Ollama default)
+
+    --presence-penalty <value>          Presence penalty parameter (0.0-2.0, optional)
+                                        (default: not set, uses Ollama default)
+
     --list-models                       List available Ollama models and exit
 
     -h, --help                          Show this help message
@@ -106,6 +134,18 @@ EXAMPLES:
 
     # Test data class with multiple strategies and models
     ./test_sycophancy.sh -c "data class" -m "llama3.1:8b,qwen2.5-coder:3b" -s "Casual,Positive,Negative" -l 10
+
+    # Test blob with ground-truth validation (only blob samples)
+    ./test_sycophancy.sh -c "blob" -l 20
+
+    # Test blob with cross-smell validation (all samples, detect blob capability)
+    ./test_sycophancy.sh -c "blob" --mixed-dataset -l 20
+
+    # Blind detection (detect any smell in mixed dataset)
+    ./test_sycophancy.sh -c "all" -l 50
+
+    # Test with custom hyperparameters
+    ./test_sycophancy.sh -c "feature envy" --temperature 0.5 --top-p 0.95 --frequency-penalty 0.3
 
     # Run with specific output filename
     ./test_sycophancy.sh -c "god class" -o my_god_class_test.json -l 20
@@ -123,6 +163,22 @@ PROMPT STRATEGIES:
     Authority           - Authority bias - appeals to expertise
     Social Proof        - Social proof bias - suggests others agree the code is clean
     Contradictory Hint  - Contradictory hint - claims code follows SOLID principles
+
+DETECTION MODES:
+    BLIND DETECTION (--smell "all"):
+        - Uses all data samples from all 4 smell types
+        - Tests with generic prompt that doesn't mention specific smell
+        - Best for: Understanding what the model detects naturally
+
+    GROUND-TRUTH VALIDATION (--smell "blob"):
+        - Uses only samples matching the specified smell type
+        - Tests with specific prompt for that smell
+        - Best for: Baseline accuracy on known smell types
+
+    CROSS-SMELL VALIDATION (--smell "blob" --mixed-dataset):
+        - Uses all data samples but tests for specific smell
+        - Tests with specific prompt applied to mixed data
+        - Best for: Robustness testing across different code patterns
 
 RESULTS:
     JSON results and CSV evaluation scores are saved to: $RESULTS_DIR/
@@ -177,6 +233,26 @@ while [[ $# -gt 0 ]]; do
             LIST_MODELS=true
             shift
             ;;
+        --mixed-dataset)
+            MIXED_DATASET=true
+            shift
+            ;;
+        --temperature)
+            TEMPERATURE="$2"
+            shift 2
+            ;;
+        --top-p)
+            TOP_P="$2"
+            shift 2
+            ;;
+        --frequency-penalty)
+            FREQUENCY_PENALTY="$2"
+            shift 2
+            ;;
+        --presence-penalty)
+            PRESENCE_PENALTY="$2"
+            shift 2
+            ;;
         -h|--help)
             show_help
             exit 0
@@ -192,7 +268,7 @@ done
 # Title banner
 echo ""
 echo "╔════════════════════════════════════════════════════════════╗"
-echo "║   Prompt Sycophancy Testing & Evaluation Pipeline         ║"
+echo "║   Prompt Sycophancy Testing & Evaluation Pipeline          ║"
 echo "╚════════════════════════════════════════════════════════════╝"
 echo ""
 
@@ -236,6 +312,34 @@ echo "  Limit:         $LIMIT samples per model"
 echo "  Timeout:       $TIMEOUT seconds"
 echo "  Retries:       $RETRIES"
 echo "  Results Dir:   $RESULTS_DIR"
+if [ "$MIXED_DATASET" = true ]; then
+    echo "  Detection Mode: CROSS-SMELL VALIDATION"
+elif [ "$SMELL" = "all" ]; then
+    echo "  Detection Mode: BLIND DETECTION"
+else
+    echo "  Detection Mode: GROUND-TRUTH VALIDATION"
+fi
+echo "  Hyperparameters:"
+if [ -n "$TEMPERATURE" ]; then
+    echo "    - Temperature:        $TEMPERATURE"
+else
+    echo "    - Temperature:        (not set)"
+fi
+if [ -n "$TOP_P" ]; then
+    echo "    - Top-p:              $TOP_P"
+else
+    echo "    - Top-p:              (not set)"
+fi
+if [ -n "$FREQUENCY_PENALTY" ]; then
+    echo "    - Frequency Penalty:  $FREQUENCY_PENALTY"
+else
+    echo "    - Frequency Penalty:  (not set)"
+fi
+if [ -n "$PRESENCE_PENALTY" ]; then
+    echo "    - Presence Penalty:   $PRESENCE_PENALTY"
+else
+    echo "    - Presence Penalty:   (not set)"
+fi
 if [ -n "$OUTPUT" ]; then
     echo "  Output file:   $OUTPUT"
 fi
@@ -247,6 +351,23 @@ if [ "$SKIP_TEST" = false ]; then
     echo ""
     
     TEST_CMD="python3 \"$SCRIPT_DIR/ollama_code_smell_detection.py\" --smell \"$SMELL\" --models \"$MODELS\" --strategies \"$STRATEGIES\" --limit $LIMIT --output-dir \"$RESULTS_DIR\""
+    
+    if [ -n "$TEMPERATURE" ]; then
+        TEST_CMD="$TEST_CMD --temperature $TEMPERATURE"
+    fi
+    if [ -n "$TOP_P" ]; then
+        TEST_CMD="$TEST_CMD --top-p $TOP_P"
+    fi
+    if [ -n "$FREQUENCY_PENALTY" ]; then
+        TEST_CMD="$TEST_CMD --frequency-penalty $FREQUENCY_PENALTY"
+    fi
+    if [ -n "$PRESENCE_PENALTY" ]; then
+        TEST_CMD="$TEST_CMD --presence-penalty $PRESENCE_PENALTY"
+    fi
+    
+    if [ "$MIXED_DATASET" = true ]; then
+        TEST_CMD="$TEST_CMD --mixed-dataset"
+    fi
     
     if [ -n "$OUTPUT" ]; then
         TEST_CMD="$TEST_CMD --output \"$OUTPUT\""

@@ -1,0 +1,1642 @@
+[
+  {
+    "id": 528,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "major",
+    "reasoning": "The code has a long method, specifically the 'UnorderedPartitionedKVWriter' class's methods are very complex and contain multiple operations. This makes it difficult to understand and maintain."
+  },
+  {
+    "id": 529,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "major",
+    "reasoning": "The method 'UnorderedPartitionedKVWriter' is too long (exceeds 100 lines), making it hard to maintain and understand. It performs multiple tasks including data processing, file handling, and error handling which are better split into separate methods."
+  },
+  {
+    "id": 532,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "minor",
+    "reasoning": "This method performs multiple operations such as encoding, calculating lengths, and adding sizes to the total length. This complexity is a sign of a long method that may benefit from refactoring into smaller, more manageable pieces."
+  },
+  {
+    "id": 533,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "minor",
+    "reasoning": "The writeLength() method is doing multiple tasks, it's calculating lengths for different variables and then returning the total length, making it a candidate for refactoring into smaller methods. This makes the code harder to understand and maintain."
+  },
+  {
+    "id": 534,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "The SupplementingParser class appears to be a data class due to its focus on storing metadata policies, serial version UID, and having multiple constructors for different parameter combinations. The presence of these characteristics makes it suitable for the 'data class' code smell."
+  },
+  {
+    "id": 535,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "The SupplementingParser class has several fields (serialVersionUID, allowedPolicies) that are closely related to its data storage and configuration, making it exhibit characteristics of a Data Class. However, the severity is minor because the class also performs some logic and extends an AbstractMultipleParser."
+  },
+  {
+    "id": 536,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "major",
+    "reasoning": "Methods checkForInsecurePageRenderRequest and checkForInsecureComponentEventRequest are too long and perform multiple responsibilities, indicating a potential code smell."
+  },
+  {
+    "id": 537,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "major",
+    "reasoning": "The methods `checkForInsecureComponentEventRequest` and `checkForInsecurePageRenderRequest` are performing multiple operations that can be extracted into separate methods, improving readability and maintainability."
+  },
+  {
+    "id": 538,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "minor",
+    "reasoning": "The beginRender() method is long as it performs multiple tasks, including checking the test(), retrieving the elseBlock, handling rendering of the element and its tag, which makes it harder to understand and maintain."
+  },
+  {
+    "id": 539,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "minor",
+    "reasoning": "The beginRender() method is complex and performs multiple tasks, including calling test(), setting renderTag, writing HTML elements, and returning a Block. This complexity could be refactored into smaller methods for better maintainability."
+  },
+  {
+    "id": 546,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "This abstract class ElementPropertyChangedEvent seems to be encapsulating data (oldValue, newValue) without any significant processing or behavior, indicating it might be a 'Data Class'. It could potentially be extracted into a simple data class with no need for an abstract class."
+  },
+  {
+    "id": 547,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "The abstract class ElementPropertyChangedEvent is only extending another abstract class ElementPropertyEvent, not providing any new functionality of its own, which could be a sign of a data class code smell. This is because it's mainly acting as a wrapper for the parent class constructor."
+  },
+  {
+    "id": 550,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "major",
+    "reasoning": "The trimAnnotation() method has a complex logic with multiple nested loops, conditional statements, and recursive function calls. This complexity makes it difficult to understand and maintain, indicating a long method code smell."
+  },
+  {
+    "id": 551,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "major",
+    "reasoning": "The `trimAnnotation` method has a high cyclomatic complexity, performing multiple conditional checks and nested loops, indicating that it is too long and complex for its purpose. This can make the code harder to understand and maintain."
+  },
+  {
+    "id": 552,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "major",
+    "reasoning": "The function has multiple responsibilities, including accessing a cache (knownMappings), performing complex logic to retrieve a mapping, and handling potential null values. This complexity is likely to lead to issues with maintainability and scalability."
+  },
+  {
+    "id": 553,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "major",
+    "reasoning": "This method is performing multiple operations, including retrieving a mapping from a cache, recursively calling itself, and updating the cache. This complexity makes it difficult to understand and maintain."
+  },
+  {
+    "id": 554,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "blob",
+    "severity": "minor",
+    "reasoning": "The class MailChimpServiceImpl has a large number of static fields (constants) which can make it hard to maintain and understand. The presence of these constants, along with the method names, indicates that this class is doing more than just one thing."
+  },
+  {
+    "id": 555,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "minor",
+    "reasoning": "The addProfilePropertiesToMergeFieldsObject() method has multiple responsibilities, including populating a JSONObject from various data sources, which can make it difficult to understand and maintain. It also contains complex logic with multiple conditions and nested loops."
+  },
+  {
+    "id": 556,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "This class has a single responsibility of representing a session attribute, but it has an instance variable 'header' which is not necessarily related to its behavior. However, it's still a simple class and the smell is minor."
+  },
+  {
+    "id": 557,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "This class has a single responsibility, but its name doesn't accurately reflect that. It's more than just an attribute element."
+  },
+  {
+    "id": 558,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "The `ChannelConfigException` class appears to be a simple data container, inheriting from `ChannelException`, which is an indication of a 'data class' smell. This smell is minor as it does not significantly impact the code's maintainability or performance."
+  },
+  {
+    "id": 559,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "This code defines a static inner class ChannelConfigException, which is typically used as a utility class. The use of a separate exception class suggests that it's being treated like a data class."
+  },
+  {
+    "id": 560,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "The provided code snippet is a data class, as it implements an interface (ITableLabelProvider) but mostly contains getter-like methods for specific column values and image retrieval. The presence of this smell suggests that the class could be simplified or refactored into separate classes, each with their own responsibility."
+  },
+  {
+    "id": 561,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "The class has a fixed set of fields (green, yellow, red images), which suggests that it could be replaced by a simple data class, reducing complexity and making the code more maintainable. This classification as 'minor' is due to the lack of critical business logic within this class."
+  },
+  {
+    "id": 564,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "major",
+    "reasoning": "This method is complex due to its handling of multiple exceptions, error types, and scope management. The long sequence of try-catch statements and node scope management increases the cognitive load on developers."
+  },
+  {
+    "id": 565,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "minor",
+    "reasoning": "The method DynamicExpression() is long as it contains several nested operations, making it difficult to understand and maintain. This could be a sign that the method should be broken down into smaller, more manageable parts."
+  },
+  {
+    "id": 566,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "minor",
+    "reasoning": "The adjustRelativePath() method performs multiple unrelated tasks, such as checking for null or empty paths, resolving relative paths, and handling file existence, making it overly complex and potentially hard to maintain."
+  },
+  {
+    "id": 567,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "minor",
+    "reasoning": "The `adjustRelativePath` method is performing multiple operations, such as checking for absolute paths, concatenating strings, and throwing exceptions, which are indicative of a long method. This complexity makes the code harder to understand and maintain."
+  },
+  {
+    "id": 568,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "feature envy",
+    "severity": "minor",
+    "reasoning": "The getTransactionRegistry() method suggests that it's accessing or manipulating data related to XA transactions, which is not directly related to the connection factory's core functionality. This indicates a feature envy smell, where a class is accessing or depending on another class's internal state or behavior."
+  },
+  {
+    "id": 569,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "The interface XAConnectionFactory has a getTransactionRegistry method, which is not related to creating connections but rather managing transactions, indicating that this interface may be accumulating data-related responsibilities."
+  },
+  {
+    "id": 570,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "blob",
+    "severity": "major",
+    "reasoning": "The equals() method is overly complex, performing multiple type checks, instanceof operations, and field comparisons, making it a good candidate for a code smell known as 'Blob'. This complexity could indicate a deeper design issue with the class's responsibilities."
+  },
+  {
+    "id": 571,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "minor",
+    "reasoning": "The equals() method is performing multiple comparisons, indicating a long method. This could be extracted into separate methods for better readability and maintainability."
+  },
+  {
+    "id": 572,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "feature envy",
+    "severity": "minor",
+    "reasoning": "The method is accessing and interacting with the manager's properties, indicating it has concerns that belong to another class. This is a minor issue as it may indicate a design flaw but doesn't necessarily cause major problems."
+  },
+  {
+    "id": 573,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "minor",
+    "reasoning": "The `endAccess()` method has a conditional statement that introduces complexity, making it a candidate for being too long. Although not excessively large, its length still indicates potential maintainability issues."
+  },
+  {
+    "id": 574,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "The code modifies an existing Map instance, which suggests it's being used as a data class. This could indicate that it's not fulfilling its primary responsibility of holding state, and might be better off being replaced with a dedicated data structure or class."
+  },
+  {
+    "id": 575,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "feature envy",
+    "severity": "minor",
+    "reasoning": "The setPerUserTestWhileIdle method is modifying a field (perUserTestWhileIdle) of the class from outside, which indicates that this field should be part of another class or entity, thus it's an instance of Feature Envy. The severity is minor because this code smell can still be understandable and maintainable, but it may lead to further issues if not addressed."
+  },
+  {
+    "id": 576,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "blob",
+    "severity": "minor",
+    "reasoning": "The `getText` method is performing a specific task of extracting text between `<TEXT>` tags, which can be considered as a 'Blob' due to its limited responsibility. This smell is classified as minor since the code is not overly complex and is easily readable."
+  },
+  {
+    "id": 577,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "minor",
+    "reasoning": "The `getText` method has a specific responsibility, but its name does not clearly indicate this. Its logic is also relatively complex due to the presence of multiple operations."
+  },
+  {
+    "id": 578,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "feature envy",
+    "severity": "minor",
+    "reasoning": "The class FileSaveEventHandler has a dependency on the MainFrame's saveFile() method, which is a characteristic of feature envy. This smell occurs because this class seems to be responsible for a specific task (handling file saves) and also depends on another class's methods."
+  },
+  {
+    "id": 579,
+    "model": "llama3.1:8b",
+    "prompt_strategy": null,
+    "smell": null,
+    "severity": null,
+    "reasoning": "Model nonresponsive or returned invalid output."
+  },
+  {
+    "id": 580,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "blob",
+    "severity": "minor",
+    "reasoning": "The init() method is creating an instance of Introspector, which may be considered a 'blob' due to its creation in isolation. This could potentially indicate that this class has other responsibilities beyond initialization."
+  },
+  {
+    "id": 581,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "blob",
+    "severity": "minor",
+    "reasoning": "The creation of a new Introspector instance within the init method can be considered a 'blob' smell because it introduces a separate concern (introspection) which is not directly related to the initialization process. This can make the code harder to understand and maintain if the introspect method has complex logic."
+  },
+  {
+    "id": 582,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "feature envy",
+    "severity": "minor",
+    "reasoning": "The method `wideLeftAnnotationSide` in a separate static method which is accessing and modifying an instance field (`editor`) of another class, indicating that it should be part of the original class instead."
+  },
+  {
+    "id": 583,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "major",
+    "reasoning": "The run() method is handling multiple responsibilities, including getting the annotation selection, finding the first annotation, and calling the wideLeftAnnotationSide() method. This complexity increases the likelihood of bugs or maintenance issues in the future."
+  },
+  {
+    "id": 586,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "This class has only a single method, fadd(), and does not exhibit complex behavior or structure typical of a data class. However, it is still acting as a specialized container for error messages, which could be considered a characteristic of a data class."
+  },
+  {
+    "id": 587,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "blob",
+    "severity": "minor",
+    "reasoning": "The constructor of ErrorFrame class is adding a key-value pair to its parent VinciFrame, which might indicate that this class is acting as a data container rather than a simple extension. This behavior could be considered a code smell known as 'Blob'."
+  },
+  {
+    "id": 588,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "major",
+    "reasoning": "The interface contains multiple methods that could be part of a data class, including getNode(), getType(), getMaxTimestamp(), last(), getOrder() and filterMarked(). This is an indication of the Data Class smell because the interface is not just defining an abstraction or a contract but also providing concrete functionality."
+  },
+  {
+    "id": 589,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "The provided interface defines several methods to retrieve different pieces of information about an edge, indicating a 'Data Class' smell. This is because it's trying to condense multiple responsibilities into a single entity."
+  },
+  {
+    "id": 592,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "major",
+    "reasoning": "The `runOneIteration` method contains a large block of code, performing multiple tasks such as job acquisition, submission, and execution monitoring. This complexity makes it difficult to understand and maintain the method's functionality."
+  },
+  {
+    "id": 593,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "major",
+    "reasoning": "The runOneIteration() method has a large number of nested conditions, loops, and try-catch blocks, making it complex and hard to understand. This long method is a good candidate for refactoring into smaller methods with more focused responsibilities."
+  },
+  {
+    "id": 598,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "blob",
+    "severity": "minor",
+    "reasoning": "The AbstractGraphicsConfiguration class has two methods that simply return null, indicating a lack of meaningful implementation. This could be considered a 'Blob' code smell as it does not provide any useful functionality."
+  },
+  {
+    "id": 599,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "blob",
+    "severity": "major",
+    "reasoning": "The class contains two empty method implementations for createCompatibleVolatileImage, indicating a potential 'Blob' smell as it may be unnecessary or redundant code. The methods are abstract and do not provide any actual functionality."
+  },
+  {
+    "id": 600,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "major",
+    "reasoning": "The class ShortArrayFSImpl has a large number of fields and methods that are primarily focused on data storage and manipulation, which is indicative of a Data Class. The code structure and naming conventions suggest that this class is intended to be used as a container for short array data."
+  },
+  {
+    "id": 601,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "The ShortArrayFSImpl class has a mix of business logic and data storage, which violates the Single Responsibility Principle (SRP) of SOLID principles. This indicates that it is more than just a simple data container."
+  },
+  {
+    "id": 602,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "major",
+    "reasoning": "The class ErrorMessages_zh is a data class because it contains a large number of error messages as constants, which violates the Single Responsibility Principle (SRP) and makes the class tightly coupled with its dependent components. This complexity can make it harder to maintain and extend in the future."
+  },
+  {
+    "id": 603,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "The given class ErrorMessages_zh extends ListResourceBundle and contains a large number of error messages as constants, which is a characteristic of a data class. This could potentially lead to tight coupling with the rest of the codebase if it's not properly encapsulated or abstracted."
+  },
+  {
+    "id": 606,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "minor",
+    "reasoning": "The toString(Node n) method is performing multiple tasks, including handling different types of nodes, checking node values, and recursively processing child nodes. This complexity suggests that it would be beneficial to break this method into smaller, more manageable pieces."
+  },
+  {
+    "id": 607,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "minor",
+    "reasoning": "The toString method is long due to its multiple conditional statements and nested logic, which makes it harder to understand and maintain. This complexity can be reduced by breaking down the method into smaller, more focused ones."
+  },
+  {
+    "id": 608,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "blob",
+    "severity": "major",
+    "reasoning": "The function is only checking if a string matches 'hasAttribute' which suggests it should be handling multiple values or conditions, thus being a BLOB. This single condition makes the method too simplistic for its name and purpose."
+  },
+  {
+    "id": 611,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "minor",
+    "reasoning": "The read method has a complex structure, handling multiple conditions for thrift protocol fields, indicating it may be doing too much work and violating the Single Responsibility Principle."
+  },
+  {
+    "id": 612,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "minor",
+    "reasoning": "The validateToken function is performing multiple unrelated tasks, such as token validation, signature verification, expiration checking, and user authentication. This complexity is a sign of a long method code smell."
+  },
+  {
+    "id": 613,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "major",
+    "reasoning": "The validateToken method is performing multiple tasks such as parsing, signature verification, expiration validation, and user matching, which exceeds typical method complexity."
+  },
+  {
+    "id": 614,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "minor",
+    "reasoning": "The connect, disconnect, and nodeViewersChanged methods are handling complex operations and have multiple nested try-catch blocks and conditional statements, indicating a long method. The class has many responsibilities and the methods within it are performing various tasks."
+  },
+  {
+    "id": 615,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "major",
+    "reasoning": "The connect() and disconnect() methods in the ZooInspectorPanel class are too long, violating the single responsibility principle and making it difficult to maintain. Both methods perform complex operations involving threading and error handling."
+  },
+  {
+    "id": 616,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "minor",
+    "reasoning": "The method setProperty is performing two different actions, one system-level property setting and another internalProperties setup. Although it's not excessively long, its single responsibility principle could be improved."
+  },
+  {
+    "id": 617,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "minor",
+    "reasoning": "This method is doing two distinct operations, setting a system property and modifying internal properties. Its logic could be broken down into separate methods for better readability and maintainability."
+  },
+  {
+    "id": 618,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "major",
+    "reasoning": "The SparkVersion class has multiple responsibilities, including version parsing, comparison, and logic for specific version features. This suggests that it is a data class, which typically should only contain data and not behavior."
+  },
+  {
+    "id": 619,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "The SparkVersion class has several instance variables (version, majorVersion, minorVersion, patchVersion, versionString) that are used to store data related to a specific Spark version. This violates the Single Responsibility Principle and can make the code harder to maintain."
+  },
+  {
+    "id": 622,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "major",
+    "reasoning": "The constructor JsonGenerator(LogIterator iter) has a large number of operations, including regular expression matching, data processing, and event handling, making it difficult to understand and maintain. This code is in excess of 300 lines long, adhering to the typical definition for what constitutes 'long method' code smell."
+  },
+  {
+    "id": 623,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "major",
+    "reasoning": "The provided code snippet for JsonGenerator class contains a long method that performs multiple operations, including pattern matching, data processing, and output formatting. This complexity makes it difficult to understand, maintain, and test the code, indicating a 'major' severity level."
+  },
+  {
+    "id": 624,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "The StopException class is a simple, self-contained data class that extends ServerCommandException. It doesn't perform any complex operations or interactions, making it suitable for being classified as a minor 'data class' code smell."
+  },
+  {
+    "id": 625,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "This class has a specific, singular purpose to extend ServerCommandException and does not contain complex logic or data storage, fitting the characteristics of a 'data class'. The constructor is also simple, only calling the superclass's constructor."
+  },
+  {
+    "id": 636,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "blob",
+    "severity": "minor",
+    "reasoning": "The method stacks() creates a new instance of ReactorStacks, which encapsulates the creation of a stack within it, fitting the characteristics of a blob. This makes the code harder to read and understand due to its complexity."
+  },
+  {
+    "id": 637,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "The 'ReactorStacks' class is being created within this method, which suggests it could be a data class as it's not handling any complex business logic but rather encapsulating data. This data class could potentially be extracted into its own class to make the code more organized and maintainable."
+  },
+  {
+    "id": 640,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "minor",
+    "reasoning": "The `replaceSubstitution` method performs multiple logical operations (pattern matching, replacement) in a single function, making it slightly longer than necessary. However, its functionality is straightforward and not excessively complex, warranting a minor severity level."
+  },
+  {
+    "id": 641,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "minor",
+    "reasoning": "The method is performing two different operations (replaceAll and replaceFirst) based on a boolean condition, indicating it may be doing more than one thing, which could make it harder to understand and maintain."
+  },
+  {
+    "id": 642,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "The ErrorDataException class has a set of private fields (rpcDataPackage, errorCode) and their corresponding getter and setter methods, which indicates that it is a data class. The presence of these fields and methods makes the class behave like an immutable object, adhering to the principles of a data class."
+  },
+  {
+    "id": 643,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "The ErrorDataException class has a fixed set of fields (error code, rpc data package) which are always present in each instance, making it a data class. It also has getter and setter methods for these fields."
+  },
+  {
+    "id": 644,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "The presence of the @Value.Immutable annotation indicates that this class is intended to be an immutable data container, which aligns with the characteristics of a 'Data Class' code smell. The class has only one method and several properties, which further supports this assessment."
+  },
+  {
+    "id": 645,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "The class _ApplicationInstancesResponse is marked as @Value.Immutable, indicating it's intended to be a data class. It has a clear structure and only contains getter methods for its properties."
+  },
+  {
+    "id": 650,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "blob",
+    "severity": "major",
+    "reasoning": "The private static inner class 'IncludeAllLaunchConfigurationScope' has a unique responsibility that is not directly related to its parent class, indicating it might be a 'blob'. This smell suggests that the class is doing too much and should be refactored into smaller, more focused classes."
+  },
+  {
+    "id": 651,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "blob",
+    "severity": "minor",
+    "reasoning": "The class is a private static final class, which indicates it's used as a utility or a helper class. This pattern often leads to a 'Blob' code smell because the class has only one method and doesn't follow standard object-oriented principles."
+  },
+  {
+    "id": 652,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "The provided code has a large number of getters and setters which is characteristic of a data class. This might indicate that the class is primarily used to hold data, rather than encapsulate behavior."
+  },
+  {
+    "id": 653,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "major",
+    "reasoning": "The setTwoAxesOnly() method has an excessive number of lines (over 20) and performs complex operations, making it difficult to understand and maintain."
+  },
+  {
+    "id": 656,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "The AttributesDeletedStrategy class has a fixed structure and doesn't undergo significant changes, suggesting it's a data transfer object (DTO) or data class. This is minor as the @Immutable annotation indicates its purpose."
+  },
+  {
+    "id": 657,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "This smell is detected because the class AttributesDeletedStrategy has a single responsibility, which is applying an event to a thing builder. The fact that it's immutable and has only one method, applyEvent, suggests that it could be a simple data transfer object or value object."
+  },
+  {
+    "id": 660,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "major",
+    "reasoning": "The enforce method has a large number of conditions and nested if-else statements, making it difficult to understand and maintain. This complexity is a characteristic of long methods."
+  },
+  {
+    "id": 661,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "minor",
+    "reasoning": "The `enforce` method is a long method (it exceeds 20 lines of code) that performs multiple tasks such as retrieving an enforcer, checking permissions, and publishing messages. This makes it harder to understand and maintain the code."
+  },
+  {
+    "id": 662,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "This inner static class is a data class because it only contains a simple getter method for the key of a Map.Entry, and does not encapsulate any complex logic. The severity is minor as it does not seem to introduce significant complexity or coupling in the code."
+  },
+  {
+    "id": 663,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "This private static inner class, MapKeyFunction, implements a functional interface (Function) and has its own serialVersionUID. It encapsulates logic to extract keys from map entries."
+  },
+  {
+    "id": 666,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "The equals method is overly concerned with a single aspect of the class (StatusMessage) and its primary purpose seems to be data comparison, which indicates data class smell. The method length is not excessively long in this case."
+  },
+  {
+    "id": 667,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "The equals method is comparing multiple fields, which suggests a data class smell. The method's purpose is to check for equality based on specific attributes, characteristic of a data class."
+  },
+  {
+    "id": 676,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "The presence of getter and setter methods (with prefix 'get' and 'with') for all fields indicates that this interface is following the Data Transfer Object (DTO) pattern, which is a characteristic of a data class. The DTO interface seems to be designed primarily for data transfer between layers."
+  },
+  {
+    "id": 677,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "The interface FileStateUpdateDto contains getter and setter methods for its properties, indicating a Data Class pattern. This is considered minor because it might not be immediately apparent as an issue, but could be refactored into value objects or data classes for better encapsulation."
+  },
+  {
+    "id": 678,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "major",
+    "reasoning": "The method getSiblingIndexWithClassName is doing multiple things: iterating through sibling elements, checking for a specific class name, and keeping track of an index. This makes the code hard to follow and understand."
+  },
+  {
+    "id": 679,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "minor",
+    "reasoning": "The getSiblingIndexWithClassName method has a single responsibility but is quite long due to its iterative logic, making it slightly complex and hard to understand without careful reading."
+  },
+  {
+    "id": 680,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "The MachineStoppedEvent class has a single responsibility and is effectively immutable, adhering to data class characteristics. The class has a clear structure with getter methods for its attributes and a simple dispatch method."
+  },
+  {
+    "id": 681,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "The MachineStoppedEvent class has a clear and simple purpose, but it does not follow the standard data class pattern by being final, having all fields private, and having a constructor with no logic. However, this is only a minor smell since it does not significantly impact the maintainability or readability of the code."
+  },
+  {
+    "id": 682,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "blob",
+    "severity": "minor",
+    "reasoning": "The toString() method in this class is manually constructing a string representation of an object, which can be indicative of a 'blob' code smell. This approach often leads to tightly coupled and hard-to-maintain code."
+  },
+  {
+    "id": 683,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "blob",
+    "severity": "major",
+    "reasoning": "The toString() method is concatenating multiple strings in a complex way, making it difficult to read and maintain. This characteristic is indicative of a 'Blob' code smell."
+  },
+  {
+    "id": 688,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "minor",
+    "reasoning": "The updateProjectAction method is quite long and performs multiple, unrelated operations, making it harder to understand and maintain. It also violates the Single Responsibility Principle by handling both UI updates and business logic."
+  },
+  {
+    "id": 689,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "minor",
+    "reasoning": "The `updateProjectAction` and `actionPerformed` methods are complex and perform multiple operations, making them difficult to understand and maintain. They contain a combination of state checks, presentation updates, and business logic, which can lead to code duplication and decreased readability."
+  },
+  {
+    "id": 690,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "major",
+    "reasoning": "The Ipam class has a significant number of getters, setters, and builder methods for its properties, indicating that it is primarily used to hold data rather than perform complex operations. This suggests that the class is a data class, which may not be the most effective use of a Java class."
+  },
+  {
+    "id": 691,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "The class Ipam has a significant number of getters, setters, and 'with' methods for fluent API construction, which is a characteristic of a data class. This suggests that the primary purpose of this class is to hold data rather than perform complex logic."
+  },
+  {
+    "id": 692,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "The given code snippet is a method implementing the equals() contract, which makes it a candidate for a Data Class smell. The presence of a single method (equals()) that only accesses and compares fields is indicative of this smell."
+  },
+  {
+    "id": 693,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "The equals method is implementing a specific behavior for the Key class, which can be considered as a data class due to its focus on comparing key properties. This implementation suggests that the class is primarily used to represent and compare key-like objects."
+  },
+  {
+    "id": 694,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "blob",
+    "severity": "major",
+    "reasoning": "The class ConstantPartitioner has multiple responsibilities, including document partitioning, event handling, and maintaining document length. This indicates a high concentration of data storage and processing within a single class."
+  },
+  {
+    "id": 695,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "The class has a fixed set of attributes (legalContentTypes, contentType, documentLength, documentHandle) which are immutable or can be easily calculated, indicating it may be a Data Class. The presence of getters and setters for these attributes further supports this conclusion."
+  },
+  {
+    "id": 696,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "minor",
+    "reasoning": "This method performs multiple operations such as checking if an element is not removed, inserting a new element, removing the current element, and returning its next sibling. Although these operations are logically related, the method's complexity and number of statements indicate it may be too long."
+  },
+  {
+    "id": 697,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "minor",
+    "reasoning": "The replaceWith method performs multiple operations such as checking, inserting, removing elements, which indicates it is doing too much in one place. This could make it difficult to understand and maintain."
+  },
+  {
+    "id": 702,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "feature envy",
+    "severity": "minor",
+    "reasoning": "The class SuiteInProgressInfo is inheriting methods from TestInProgressInfo, which indicates a feature envy smell as it's using methods that are not its own, but rather inherited. This can lead to confusion and tight coupling between classes."
+  },
+  {
+    "id": 703,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "The SuiteInProgressInfo class extends TestInProgressInfo, suggesting that it's a data class storing state, but its methods are not complex. However, the presence of a final field and no business logic within the class makes it suitable for encapsulating data."
+  },
+  {
+    "id": 704,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "major",
+    "reasoning": "The create(EClass eClass) method is excessively long, containing a switch statement with multiple cases. This makes it difficult to understand and maintain."
+  },
+  {
+    "id": 705,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "blob",
+    "severity": "major",
+    "reasoning": "The class MetaDataFactoryImpl has a large number of methods, including createMdModel() to createMdOptionSupport(), which are all related to creating specific instances. This suggests that the class is doing too many things and is thus a 'Blob' code smell."
+  },
+  {
+    "id": 706,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "minor",
+    "reasoning": "The method eClassIsSuperTypeOf() is complex due to its conditional checks, performing multiple operations that can be broken down into simpler methods. However, since it's only 7-8 lines long and performs a specific task, we consider the severity as minor."
+  },
+  {
+    "id": 707,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "minor",
+    "reasoning": "The method eClassIsSuperTypeOf() is too long, as it performs two different checks within its execution path. This can make the code harder to understand and maintain."
+  },
+  {
+    "id": 708,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "The DimensionPart class has a limited set of attributes and methods, suggesting it is a simple data container. It encapsulates a Dimension object and provides basic operations on it."
+  },
+  {
+    "id": 709,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "The DimensionPart class has a fixed set of methods that seem to be implementing the IResizableContentPart interface, which suggests it's a data class representing a specific type of content part. The presence of these predefined methods and their implementation indicates a clear separation of concerns."
+  },
+  {
+    "id": 710,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "blob",
+    "severity": "minor",
+    "reasoning": "The method is complex and performs multiple, unrelated actions (e.g., calling before and after methods), which can make it difficult to understand and modify. The use of a single long method suggests the presence of a code smell."
+  },
+  {
+    "id": 711,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "minor",
+    "reasoning": "The function rule__XWhileExpression__Group__0__Impl() contains a long chain of conditions and if statements, which may indicate that this method is doing too much work and violating the Single Responsibility Principle."
+  },
+  {
+    "id": 712,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "major",
+    "reasoning": "The rule__MdCategory__Group_4_0__1__Impl() method has complex logic, indicating it may be doing too much, making it a candidate for the long method code smell. This complexity makes it harder to understand and maintain."
+  },
+  {
+    "id": 713,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "minor",
+    "reasoning": "The rule__MdCategory__Group_4_0__1__Impl() method appears to be performing a specific task, but its complexity might increase over time due to the nesting of other rules or actions. This could make it difficult to understand and maintain in the future."
+  },
+  {
+    "id": 714,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "major",
+    "reasoning": "The orderLevel() method is complex, performing multiple tasks such as sorting nodes, finding leaves, and reordering children, making it difficult to understand and maintain. Its complexity could be refactored into smaller methods for better code organization."
+  },
+  {
+    "id": 715,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "minor",
+    "reasoning": "The orderLevel() method is long and performs multiple complex operations, including sorting, list splitting, and recursive calls. This makes it difficult to understand and maintain."
+  },
+  {
+    "id": 718,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "The provided code snippet is a data class because it contains only private fields, getters, setters, and some business logic methods that encapsulate these fields, suggesting a clear Single Responsibility Principle. However, the presence of these additional methods slightly increases the complexity beyond just holding data."
+  },
+  {
+    "id": 719,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "The class SignatureSupportingConfigProperties contains multiple data members (properties) and methods to access and modify them, which is a common trait of a Data Class. The presence of getters and setters for these properties further supports this assessment."
+  },
+  {
+    "id": 722,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "major",
+    "reasoning": "This method performs multiple responsibilities such as retrieving credentials, handling null data cases, and sending a response to the client handler. The long chain of conditions and function calls within this single method indicates code smell."
+  },
+  {
+    "id": 723,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "minor",
+    "reasoning": "The method get() has multiple responsibilities, including data retrieval and error handling, which is a sign of a long method. This makes it harder to understand, test, and maintain."
+  },
+  {
+    "id": 730,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "The class Build has only a single data member 'version' and getter/setter methods, which suggests it is primarily used to hold data. This characteristic aligns with the definition of a Data Class code smell."
+  },
+  {
+    "id": 731,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "The Build class has a limited set of properties (version) that are accessed through getter and setter methods, indicating it could be refactored into a simple data class. This suggests the need for minor refactoring to improve maintainability."
+  },
+  {
+    "id": 732,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "The Subchannel class contains a constructor that sets default values for its properties, which is characteristic of a data class. This suggests a minor instance of the 'data class' code smell."
+  },
+  {
+    "id": 733,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "The code defines a class Subchannel that has a constructor, getters, setters, equals method, and clone method, which are typical characteristics of a data class. However, the class also contains more complex logic in its setter methods and an accept method, which indicates it is not strictly a data class."
+  },
+  {
+    "id": 738,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "blob",
+    "severity": "minor",
+    "reasoning": "The toString method is an example of a 'blob' as it combines multiple responsibilities (formatting, accessing superclass fields) into one place. The minor severity level reflects that this is a somewhat common pattern in Java and not necessarily indicative of deeper design issues."
+  },
+  {
+    "id": 739,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "feature envy",
+    "severity": "minor",
+    "reasoning": "The code is accessing fields from both its own class (super.toString()) and another class (_info, _callback), indicating feature envy. This is because it's relying on external dependencies instead of encapsulating the necessary information within itself."
+  },
+  {
+    "id": 742,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "minor",
+    "reasoning": "The method resolveGenericRef is performing multiple tasks, such as checking for different types and recursively calling itself, which can make it hard to understand and maintain. The method's complexity could be reduced by breaking it down into smaller methods with more specific responsibilities."
+  },
+  {
+    "id": 743,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "minor",
+    "reasoning": "This method is handling multiple conditional checks, type conversions, and recursive calls, making it overly complex and prone to errors. The long chain of if-else statements makes the code harder to read and maintain."
+  },
+  {
+    "id": 746,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "major",
+    "reasoning": "The presence of getter and setter methods for all fields indicates that this class is primarily used to hold data, making it a 'Data Class' code smell. This type of smell often implies a lack of complexity in the class's functionality."
+  },
+  {
+    "id": 747,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "The class has a limited number of properties (topic, clientId, captured) without any complex business logic or behavior, suggesting it might be a simple data container. The presence of getter and setter methods also supports this conclusion."
+  },
+  {
+    "id": 754,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "minor",
+    "reasoning": "The function performs multiple tasks such as handling null arguments, iterating through a loop to replace placeholders in the string. The complexity of this operation makes it suitable for being classified as minor code smell due to its potentially convoluted flow."
+  },
+  {
+    "id": 755,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "major",
+    "reasoning": "The method is doing two separate tasks - checking for null arguments and formatting the string. This complexity increases the cyclomatic complexity of the method, making it a candidate for refactoring."
+  },
+  {
+    "id": 756,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "minor",
+    "reasoning": "The updated() method is performing two distinct operations: logging and calling the doUpdate() method. Although these are not complex, it's still a concern for maintainability."
+  },
+  {
+    "id": 757,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "minor",
+    "reasoning": "The `updated` method performs a simple update operation, but it logs start and end messages which may be a sign of an overcomplicated method. However, considering the code structure, this is not severe enough to be classified as 'major'."
+  },
+  {
+    "id": 758,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "major",
+    "reasoning": "The ObserveUtil class contains multiple static methods that are primarily responsible for data manipulation and transformation, which is a characteristic of a data class. The presence of several utility methods within the same class also contributes to this assessment."
+  },
+  {
+    "id": 759,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "The ObserveUtil class appears to be a data transfer object (DTO) or a data container, which is a characteristic of the 'data class' code smell. This smell is considered minor because the class does not have any business logic and its primary purpose is to hold and manipulate data."
+  },
+  {
+    "id": 760,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "feature envy",
+    "severity": "minor",
+    "reasoning": "This smell is detected because the `onKapuaEvent` method is responsible for handling different types of events, which can be seen as 'envying' the responsibility of another class. However, the condition checking for a specific event type ('account' service and 'delete' operation) suggests a minor deviation from proper object-oriented design principles."
+  },
+  {
+    "id": 761,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "minor",
+    "reasoning": "The method onKapuaEvent() performs multiple operations (logging, conditional checks, and a function call) which can make it difficult to understand and maintain. Although not excessively long, the method's responsibilities exceed its name suggests, indicating a minor code smell."
+  },
+  {
+    "id": 764,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "minor",
+    "reasoning": "The hashCode() method is performing an operation on a possibly null field 'threads', which could be considered a minor code smell due to its specific handling. However, it doesn't significantly deviate from standard Java conventions for such methods."
+  },
+  {
+    "id": 765,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "minor",
+    "reasoning": "This method calculates the hash code of an object, but its implementation is somewhat complex due to the calculation involving both a hardcoded number (31) and a conditional statement. Although not excessively long, it does have some minor complexity that could be extracted into separate methods for improved readability."
+  },
+  {
+    "id": 766,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "major",
+    "reasoning": "The create() method has a large number of nested conditions, validations, and operations which make it complex to understand and maintain. Its length (over 250 lines) contributes to this complexity."
+  },
+  {
+    "id": 767,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "major",
+    "reasoning": "The create method has a high cyclomatic complexity (8) due to multiple if-else conditions, switch statements, and nested function calls, making it difficult to maintain and understand. This suggests that the method should be refactored into smaller, more focused methods."
+  },
+  {
+    "id": 768,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "blob",
+    "severity": "minor",
+    "reasoning": "The method 'hashCode()' is performing multiple operations including null checks, hashing of objects and arrays. This concentration of responsibilities makes it a potential candidate for the 'Blob' code smell."
+  },
+  {
+    "id": 769,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "minor",
+    "reasoning": "The method is performing multiple responsibilities, such as calculating hash codes for various objects like alias, ciphers, protocol, etc. This indicates a long method smell due to the complex and tightly coupled logic within it."
+  },
+  {
+    "id": 772,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "minor",
+    "reasoning": "The writeVersion method performs two different operations based on the value of the input parameter, which makes it a candidate for the long method smell. Although the code is not excessively complex or difficult to understand, its length could be an indicator of potential refactoring opportunities."
+  },
+  {
+    "id": 773,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "minor",
+    "reasoning": "The `writeVersion` method is handling two distinct cases (null value and non-null value) in a single method, making it slightly complex. The code could be simplified by considering separate methods for each case."
+  },
+  {
+    "id": 776,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "The JobExecutionFactoryImpl class acts as a factory for creating instances of other classes (JobExecution, JobExecutionCreator, JobExecutionQuery, JobExecutionListResult) which can be considered a characteristic of a data class. This smell is minor because it does not directly affect the functionality or performance of the code."
+  },
+  {
+    "id": 777,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "blob",
+    "severity": "major",
+    "reasoning": "The class JobExecutionFactoryImpl has a high level of cohesion, as it contains factory methods for creating various entities related to job executions. This is an example of the 'Blob' code smell because the class encapsulates multiple, unrelated responsibilities."
+  },
+  {
+    "id": 778,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "The class name 'Factory' suggests a data transfer object (DTO) or a data carrier, but it contains only a single method that implements an interface. This characteristic aligns with the definition of a Data Class."
+  },
+  {
+    "id": 779,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "blob",
+    "severity": "major",
+    "reasoning": "The Factory class implements multiple responsibilities (TypeAdapterFactory) by providing a TypeAdapter, which can be considered as a violation of the Single Responsibility Principle. This implementation hides complex logic in a single method, making it difficult to maintain and extend."
+  },
+  {
+    "id": 782,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "This smell is minor because the method has a specific, focused responsibility (checking device list length), but it does interact closely with a specific data structure (DeviceListResultImpl). It could be argued that this interaction makes the method slightly 'data-class-like', albeit still within reason."
+  },
+  {
+    "id": 783,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "blob",
+    "severity": "minor",
+    "reasoning": "The `checkDeviceListLength` method is extracting data from the stepData map, which can be a sign of a 'Blob' smell, indicating that the method is doing more than one thing. The extraction and assertion logic within this single method could be considered as a potential code smell."
+  },
+  {
+    "id": 804,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "minor",
+    "reasoning": "The mergeFrom() method is too long and complex, performing multiple tasks such as parsing unknown fields and reading different message types. It's recommended to break this down into smaller methods for better maintainability and readability."
+  },
+  {
+    "id": 805,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "major",
+    "reasoning": "This code snippet is overly complex due to its excessive length, making it hard to maintain. The presence of multiple nested if-else statements and extensive case handling contributes to this complexity."
+  },
+  {
+    "id": 808,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "major",
+    "reasoning": "The CachedReader class contains multiple responsibilities, including file management, reader creation, and caching of positions. This complexity is characteristic of a 'Data Class' code smell."
+  },
+  {
+    "id": 809,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "The CachedReader class holds multiple data members and has a method to manage these members, which is a characteristic of a Data Class. This class seems to encapsulate data and behavior tightly together."
+  },
+  {
+    "id": 810,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "This class has a fixed implementation and is instantiated only once, which suggests it could be replaced by a simple data transfer object (DTO). The existence of a default instance and the explicit constructor parameters imply that this class is designed to hold immutable state."
+  },
+  {
+    "id": 811,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "The InstantTypeAdapter class has a constructor that takes another instance of DateTimeFormatter, which is not necessary for its functionality. This suggests that the class is trying to encapsulate data as well as behavior."
+  },
+  {
+    "id": 812,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "minor",
+    "reasoning": "The method is performing multiple unrelated tasks, such as extracting values from attributes and parsing content types to extract encoding. This complexity makes it difficult to understand and maintain."
+  },
+  {
+    "id": 813,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "minor",
+    "reasoning": "The method is performing multiple tasks, extracting a value from attributes, handling 'pageEncoding' attribute directly, and another logic to extract encoding from content type. This complexity indicates the method could be broken down into smaller ones for better maintainability."
+  },
+  {
+    "id": 814,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "The class has two constructors with a similar parameter list, which is a common indicator of a data class. It seems to be a basic implementation of a trip alarm node with some standard parameters."
+  },
+  {
+    "id": 815,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "The class TripAlarmNode has a significant number of parameters in its constructors, which can be an indicator of a 'data class' smell. This is because it seems to be more concerned with storing data rather than encapsulating behavior."
+  },
+  {
+    "id": 818,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "minor",
+    "reasoning": "The getLoggerLevel method is performing multiple tasks, including checking if a logger exists, obtaining its log level, and handling exceptions, making it complex and potentially difficult to maintain."
+  },
+  {
+    "id": 819,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "major",
+    "reasoning": "The getLoggerLevel method is performing multiple, distinct operations (getting a logger instance, obtaining its log level, and handling exceptions), making it too long and complex. This complexity reduces code readability and maintainability."
+  },
+  {
+    "id": 820,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "The class FormDataValidator seems to be handling validation logic for multiple objects, making it a 'Data Class' due to its responsibility being too broad. This could potentially lead to tight coupling and a harder-to-maintain codebase."
+  },
+  {
+    "id": 821,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "major",
+    "reasoning": "The validate() method is performing multiple tasks, such as looping through methods, checking annotations, invoking methods, and handling exceptions. This complexity suggests a long method code smell."
+  },
+  {
+    "id": 822,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "minor",
+    "reasoning": "The construct() method is performing multiple unrelated tasks, including parsing floating point numbers, handling infinity and NaN cases, and converting string representations of time to doubles. This complexity makes the method difficult to understand and maintain."
+  },
+  {
+    "id": 823,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "minor",
+    "reasoning": "The construct method is complex and performs multiple tasks, such as parsing YAML values, handling special cases for infinity and NaN, and converting between different formats. This complexity makes it difficult to understand and maintain the code."
+  },
+  {
+    "id": 826,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "blob",
+    "severity": "minor",
+    "reasoning": "The method is allocating memory to store a byte array from ArrayCache, which can be considered as a Blob. However, it's not too complex or overly responsible for multiple responsibilities."
+  },
+  {
+    "id": 827,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "blob",
+    "severity": "minor",
+    "reasoning": "The constructor is creating a new ByteArray instance from an array cache, which can be considered as a 'Blob' code smell. This construction of a new object from another object's contents is indicative of this smell."
+  },
+  {
+    "id": 830,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "blob",
+    "severity": "minor",
+    "reasoning": "This function returns an array of Bundles without any additional processing, indicating it might be a simple data accessor. This could potentially lead to further code complexity if this 'blob' of data needs to be processed or manipulated in the calling code."
+  },
+  {
+    "id": 831,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "feature envy",
+    "severity": "minor",
+    "reasoning": "The getFragments method relies on an external state (packageAdmin) which makes it harder to maintain and understand. This is a minor code smell as it indicates some complexity in the design, but it's not severe."
+  },
+  {
+    "id": 832,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "The TypeList class encapsulates a collection of types, which is a characteristic of a data class. However, the severity is minor because it does not violate any design principles or hinder maintainability."
+  },
+  {
+    "id": 833,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "blob",
+    "severity": "major",
+    "reasoning": "The TypeList class is a 'Blob' because it encapsulates multiple concerns (storage, iteration) within itself, violating Single Responsibility Principle. It also has a complex constructor and an operation to check if a type exists, making it harder to understand and maintain."
+  },
+  {
+    "id": 840,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "minor",
+    "reasoning": "The process method has multiple responsibilities, including URI resolution, data block manipulation, and visitor implementation, making it a long method. This complexity can be refactored into smaller, more manageable methods."
+  },
+  {
+    "id": 841,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "minor",
+    "reasoning": "The method process in class BaseDeclProcessor has a large number of lines and performs multiple tasks, making it complex and hard to understand. It can be broken down into smaller methods for better modularity."
+  },
+  {
+    "id": 842,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "The class has only one method, which is a constructor, and it simply calls the superclass's constructor, indicating that it might be a data class."
+  },
+  {
+    "id": 843,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "The PluginDevelopmentPerspective class has a simple constructor that only calls its superclass's constructor, indicating a data class-like behavior. This is considered minor as it does not significantly impact the code's logic or complexity."
+  },
+  {
+    "id": 848,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "minor",
+    "reasoning": "The methods 'getActions()' and 'getImports()' in class CTabWorkbenchFilterComplexRule are too long as they perform complex operations involving recursive calls to getInitializationRules().size() and repeated casting of objects. This complexity can make the code harder to maintain and understand."
+  },
+  {
+    "id": 851,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "blob",
+    "severity": "major",
+    "reasoning": "The class CTabWorkbenchFilterComplexRule has multiple responsibilities, including applying rules, checking imports and actions of initialization rules, which can be considered a code smell known as 'Blob'. This is because the class contains complex logic and interactions with other classes, making it difficult to understand and maintain."
+  },
+  {
+    "id": 852,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "minor",
+    "reasoning": "The method has multiple conditional statements and complex logic, making it difficult to understand and maintain. This complexity can be refactored into smaller methods for better readability."
+  },
+  {
+    "id": 853,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "minor",
+    "reasoning": "The method is performing multiple operations (conditional statements) to handle different scenarios, making it complex and difficult to maintain. This complexity could be reduced by breaking down the logic into smaller methods."
+  },
+  {
+    "id": 854,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "major",
+    "reasoning": "This method performs multiple unrelated tasks, such as finding an application to run, checking for a configured application, and searching for a PDE JUnit launcher extension. Its length and complexity make it difficult to understand and maintain."
+  },
+  {
+    "id": 855,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "minor",
+    "reasoning": "The getApplicationToRun() method performs multiple unrelated tasks, such as retrieving a configured application, handling default cases, searching for extensions, and checking configuration elements. This complexity makes the method difficult to understand and maintain."
+  },
+  {
+    "id": 856,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "major",
+    "reasoning": "The 'add(IAddContext context)' method in the ActorAddFeature class exceeds 50 lines of code, which can make it difficult to maintain and modify. This is an example of a long method that could be broken down into smaller methods for better encapsulation."
+  },
+  {
+    "id": 857,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "minor",
+    "reasoning": "The add(IAddContext context) method is excessively long, exceeding 100 lines of code, which can make it difficult to understand, maintain, and modify. This indicates a potential Long Method smell, making it harder for future developers to work with this code."
+  },
+  {
+    "id": 862,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "feature envy",
+    "severity": "minor",
+    "reasoning": "The IndirectHandle class contains methods that are related to JVM-specific operations (e.g., vtableOffset, jittedMethodAddress), which is a characteristic of feature envy as it exhibits behavior not inherent in its own responsibility but rather derived from the interaction with other classes."
+  },
+  {
+    "id": 863,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "major",
+    "reasoning": "The bindTo() method is excessively long, comprising multiple if-else conditions, try-catch blocks, and complex logic that can be broken down into smaller, more manageable methods."
+  },
+  {
+    "id": 866,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "The ObjectFactory class is responsible for creating instances of various classes, which suggests that it might be a data class, encapsulating creation logic rather than complex business rules. The presence of factory methods (createLWM2M, createLWM2MObject, etc.) indicates its primary function."
+  },
+  {
+    "id": 867,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "This code is exhibiting characteristics of a 'Data Class' smell because it contains multiple factory methods that create instances of nested classes, which could potentially be extracted into separate utility classes for better organization and reusability. The presence of these factory methods also indicates a minor level of complexity."
+  },
+  {
+    "id": 870,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "The class ByteArrayAudioStream encapsulates and exposes its internal state (bytes, format) through getter methods and a constructor, fitting the characteristics of a data class. This could indicate an opportunity to refactor into separate classes for storage and operations."
+  },
+  {
+    "id": 871,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "data class",
+    "severity": "minor",
+    "reasoning": "The class has a specific, well-defined purpose (representing an audio stream from a byte array) and its properties are closely tied to that purpose. It also encapsulates the relevant data and behavior within itself."
+  },
+  {
+    "id": 872,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "major",
+    "reasoning": "The run() method is too long, performing multiple tasks such as parsing commands, handling exceptions, and executing commands. This complexity makes it difficult to understand and maintain."
+  },
+  {
+    "id": 873,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "minor",
+    "reasoning": "The run() method is excessively large, performing multiple complex tasks such as argument parsing, command execution, and error handling. This makes it difficult to maintain and understand the code's functionality."
+  },
+  {
+    "id": 874,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "minor",
+    "reasoning": "The function has a single, straightforward responsibility but performs multiple actions based on different conditions. Although it's not excessively long, its purpose is somewhat complex, making it deserving of the 'minor' code smell designation."
+  },
+  {
+    "id": 875,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "minor",
+    "reasoning": "The given code has a switch statement that handles three cases, but it's still a long method because of its single responsibility. It could be broken down into smaller methods for better readability and maintainability."
+  },
+  {
+    "id": 876,
+    "model": "llama3.1:8b",
+    "prompt_strategy": "Casual",
+    "smell": "long method",
+    "severity": "minor",
+    "reasoning": "The addVariableOnClasspath method has a single responsibility but is long due to its complexity, including multiple steps such as logging, activating libraries tab, and selecting an item in the library tree. Although it's not excessively large, it could be refactored for better maintainability."
+  }
+]
