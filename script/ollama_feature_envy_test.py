@@ -19,6 +19,18 @@ MODELS = ["qwen2.5-coder:3b", "llama3.1:8b"]
 PROMPT_STRATEGIES = ["Positive", "Negative", "Casual"]
 
 
+def sanitize_for_filename(name: str) -> str:
+    """Convert a string to a filesystem-safe format."""
+    return name.replace(':', '-').replace('.', '_').replace('/', '-').replace(' ', '_')
+
+
+def generate_output_filename(models: list, strategies: list) -> str:
+    """Generate dynamic output filename based on models and strategies."""
+    model_part = '_'.join(sanitize_for_filename(m) for m in models)
+    strategy_part = '_'.join(s for s in strategies)
+    return f"ollama_results_{model_part}_{strategy_part}.json"
+
+
 def make_prompt(strategy: str, code: str) -> str:
     if strategy == "Positive":
         instruct = (
@@ -149,12 +161,23 @@ def extract_json_from_output(output: str):
         return None
 
 
+def load_existing_results(out_path: Path):
+    if not out_path.exists():
+        return []
+    try:
+        with open(out_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        return data if isinstance(data, list) else []
+    except Exception:
+        return []
+
+
 def main():
     parser = argparse.ArgumentParser(description='Run Ollama feature-envy tests')
     parser.add_argument('--models', type=str, help='Comma-separated list of model names to use (overrides defaults)')
     parser.add_argument('--strategies', type=str, help='Comma-separated list of prompt strategies to use (overrides defaults)')
     parser.add_argument('--limit', type=int, default=5, help='Number of samples to test (default 5)')
-    parser.add_argument('--output', type=str, default=str(OUTPUT_PATH), help='Output JSON file path')
+    parser.add_argument('--output', type=str, help='Output JSON file path (if not provided, generates dynamic name based on models and strategies)')
     parser.add_argument('--list-models', action='store_true', help='List available models and exit')
     args = parser.parse_args()
 
@@ -174,7 +197,12 @@ def main():
     if args.strategies:
         strategies_to_use = [s.strip() for s in args.strategies.split(',') if s.strip()]
 
-    out_path = Path(args.output)
+    # Generate dynamic output filename if not provided
+    if args.output:
+        out_path = Path(args.output)
+    else:
+        dynamic_filename = generate_output_filename(models_to_use, strategies_to_use)
+        out_path = Path(__file__).resolve().parent / dynamic_filename
 
     if args.list_models:
         available, err = get_available_models()
@@ -189,15 +217,36 @@ def main():
     with open(DATA_PATH, 'r', encoding='utf-8') as f:
         data = json.load(f)
 
+    results = load_existing_results(out_path)
+    processed_pairs = set()
+    for r in results:
+        rid = r.get('id')
+        rmodel = r.get('model')
+        if rid is None or rmodel is None:
+            continue
+        processed_pairs.add((rid, rmodel))
+
     # Expecting a list of records (dicts). Filter smell == 'feature envy'
     filtered = [r for r in data if r.get('smell') == 'feature envy']
-    # Sort by id and take first N (limit)
+    # Sort by id and take next unprocessed N (limit)
     try:
-        filtered_sorted = sorted(filtered, key=lambda x: x.get('id'))[: args.limit]
+        filtered_sorted_all = sorted(filtered, key=lambda x: x.get('id'))
     except Exception:
-        filtered_sorted = filtered[: args.limit]
+        filtered_sorted_all = filtered
 
-    results = []
+    filtered_sorted = []
+    for row in filtered_sorted_all:
+        sample_id = row.get('id')
+        if sample_id is None:
+            continue
+        if any((sample_id, m) not in processed_pairs for m in models_to_use):
+            filtered_sorted.append(row)
+        if len(filtered_sorted) >= args.limit:
+            break
+
+    if not filtered_sorted:
+        print("No new samples found to process for the selected model(s).")
+        return
 
     for row in filtered_sorted:
         sample_id = int(row.get('id')) if row.get('id') is not None else None
@@ -205,8 +254,8 @@ def main():
 
         for model in models_to_use:
             # avoid duplicate (id, model) entries
-            if any(r.get('id') == sample_id and r.get('model') == model for r in results):
-                print(f"Skipping duplicate result for id={sample_id}, model={model}")
+            if (sample_id, model) in processed_pairs:
+                print(f"Skipping already processed id={sample_id}, model={model}")
                 continue
 
             chosen = None
@@ -261,6 +310,7 @@ def main():
                     "severity": chosen,
                     "reasoning": chosen_reason
                 })
+            processed_pairs.add((sample_id, model))
 
     # Write results
     with open(out_path, 'w', encoding='utf-8') as f:

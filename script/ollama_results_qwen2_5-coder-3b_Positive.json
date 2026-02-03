@@ -1,0 +1,322 @@
+[
+  {
+    "id": 533,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Positive",
+    "smell": "data_class",
+    "severity": "major",
+    "reasoning": "The `writeLength` method is tightly coupled with the data it processes. It directly accesses and uses the fields of the class (`mapId`, `compressedLength`, `uncompressedLength`, and `forReduce`) without encapsulating them, which makes the method vulnerable to changes in those fields."
+  },
+  {
+    "id": 553,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Positive",
+    "smell": "data_class",
+    "severity": "minor",
+    "reasoning": "The `getPropertyMapping` method has a responsibility to handle two different types of mappings: one for `knownMappings` and another for `getPropertiesMapping`. By extracting the mapping retrieval logic into a separate helper method (`getPropertyMapping`) and using parameters (`property` and `mappings`) instead of instance variables, it reduces redundancy and enhances modularity. However, the current implementation still has some data coupling because `knownMappings` is used to store intermediate results."
+  },
+  {
+    "id": 564,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Positive",
+    "smell": "none",
+    "severity": "none",
+    "reasoning": "The code snippet you provided is a method named `DynamicExpression` in a Java parser. The method processes a dynamic expression in the JJTree-based parser framework, which typically handles the parsing of complex expressions and constructs an abstract syntax tree (AST) for them. There are no obvious smells such as feature envy, large class, or data class issues. The method structure is clear and follows typical parsing patterns."
+  },
+  {
+    "id": 566,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Positive",
+    "smell": "none",
+    "severity": "minor",
+    "reasoning": "The code snippet does not exhibit any noticeable smells. It is clean and self-contained, making it easy to understand and maintain."
+  },
+  {
+    "id": 570,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Positive",
+    "smell": "none",
+    "severity": "none",
+    "reasoning": "The provided code snippet is a standard implementation of the `equals` method in Java, which is used to compare two objects for equality. There are no obvious code smells or issues related to feature envy, large class, or data class."
+  },
+  {
+    "id": 573,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Positive",
+    "smell": "none",
+    "severity": "none",
+    "reasoning": "The code snippet provided does not exhibit any code smells such as Feature Envy, Large Class, or Data Class. It is a straightforward method override that performs basic operations and handles conditional logic based on the type of manager."
+  },
+  {
+    "id": 575,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Positive",
+    "smell": "none",
+    "severity": "minor",
+    "reasoning": "The code snippet provided is a valid implementation of setting per-user test while idle logic. It includes checks for null values and ensures that existing data is cleared before updating, which is a common pattern in such scenarios. The code has no obvious smells, it's clean and straightforward."
+  },
+  {
+    "id": 577,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Positive",
+    "smell": "none",
+    "severity": "minor",
+    "reasoning": "The code snippet is simple and does not exhibit any code smells such as feature envy, large class, or data class. It is a straightforward method that extracts text between `<TEXT>` tags."
+  },
+  {
+    "id": 581,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Positive",
+    "smell": "none",
+    "severity": "minor",
+    "reasoning": "The code snippet provided is a simple override of the `init` method in a class. It initializes the superclass (`super.init()`) and creates an instance of `Introspector` with the log as its parameter. There are no apparent issues or smells in this code."
+  },
+  {
+    "id": 613,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Positive",
+    "smell": "none",
+    "severity": "minor",
+    "reasoning": "The code snippet does not contain any code smells such as feature envy, large class, or data class. It is a simple method for validating a JWT token by checking the signature, expiration time, and matching subjects."
+  },
+  {
+    "id": 617,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Positive",
+    "smell": "none",
+    "severity": "minor",
+    "reasoning": "The method is straightforward and does not exhibit any code smells such as feature envy, large class, or data class. It simply sets a property based on the input parameters."
+  },
+  {
+    "id": 622,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": null,
+    "smell": null,
+    "severity": null,
+    "reasoning": "Model nonresponsive or returned invalid output."
+  },
+  {
+    "id": 637,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Negative",
+    "smell": "large_class",
+    "severity": "minor",
+    "reasoning": "The code snippet is a method that returns an instance of `ReactorStacks` which seems to be a large class. This could be considered a God Class as it has dependencies on multiple other classes (`getConnectionContext()`, `getRootV2()`, and `getTokenProvider()`). The method is tightly coupled with the creation of an instance of `ReactorStacks`, making it difficult to maintain or extend."
+  },
+  {
+    "id": 641,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Positive",
+    "smell": "none",
+    "severity": "none",
+    "reasoning": "The code snippet is clean and does not have any smell of code. It uses a simple method to replace substrings based on a pattern with optional repetition."
+  },
+  {
+    "id": 667,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Positive",
+    "smell": "none",
+    "severity": "minor",
+    "reasoning": "The code snippet you provided is a valid implementation of the `equals` method for a class named `StatusMessage`. It checks equality based on three fields (`message`, `type`, and `isAccessible`) using `Objects.equals()`. There are no code smells detected in this code."
+  },
+  {
+    "id": 679,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Positive",
+    "smell": "none",
+    "severity": "minor",
+    "reasoning": "The code snippet is clean and does not exhibit any code smells. It iterates through the siblings of a given element to find the index where an element with a specific class name appears, without duplicating logic or creating unnecessary classes."
+  },
+  {
+    "id": 683,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Positive",
+    "smell": "none",
+    "severity": "minor",
+    "reasoning": "The code snippet you provided is a standard implementation of the `toString` method for a Java class. It does not exhibit any specific smells such as feature envy, large class, or data class. The code is clean and follows conventional best practices."
+  },
+  {
+    "id": 693,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Positive",
+    "smell": "data_class",
+    "severity": "major",
+    "reasoning": "The `equals` method is tightly coupled with the `annotationType` and `type` fields, which are not part of the data structure represented by the `Key` class. This makes it a sign that the class might be too large or has features that are not essential to its primary purpose."
+  },
+  {
+    "id": 697,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Positive",
+    "smell": "data_class",
+    "severity": "minor",
+    "reasoning": "The method `replaceWith` is modifying two data members (`nextSibling` and `parent`) of the current element. While it does some validation, it primarily deals with operations on its own instance, which could be better encapsulated within a class if needed."
+  },
+  {
+    "id": 711,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Positive",
+    "smell": "large_class",
+    "severity": "major",
+    "reasoning": "The rule__XWhileExpression__Group__0__Impl method is excessively large, containing a single action within its block. This can lead to an overly complex and difficult-to-understand class, which violates the Single Responsibility Principle (SRP). Breaking down such methods into smaller, more focused ones would improve code maintainability."
+  },
+  {
+    "id": 713,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Positive",
+    "smell": "none",
+    "severity": "none",
+    "reasoning": "The code snippet you provided is a method implementation in a parser generator for a grammar. This method, `rule__MdCategory__Group_4_0__1__Impl`, handles parsing an element of the grammar and does not exhibit any evident smells such as feature envy, large class, or data class patterns. The structure and naming conventions used are standard in parser generation frameworks like ANTLR."
+  },
+  {
+    "id": 723,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Positive",
+    "smell": "none",
+    "severity": "minor",
+    "reasoning": "The method is checking for non-null values and handling null case scenarios appropriately. It also converts a JsonObject to a CredentialsResult and passes it back to the resultHandler. There are no code smells detected in this snippet."
+  },
+  {
+    "id": 738,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Positive",
+    "smell": "none",
+    "severity": "none",
+    "reasoning": "The code snippet does not exhibit any recognizable code smells. It is a simple and straightforward implementation of the `toString` method, which is a common practice in Java for object representation."
+  },
+  {
+    "id": 742,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Positive",
+    "smell": "none",
+    "severity": "none",
+    "reasoning": "The code snippet provided does not exhibit any code smells such as feature envy, large class, or data class issues. It is a straightforward method that handles the resolution of generic references based on provided type information."
+  },
+  {
+    "id": 755,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Positive",
+    "smell": "none",
+    "severity": "none",
+    "reasoning": "The code snippet does not exhibit any code smells such as feature envy, large class, or data class. It is a simple implementation of the String.format method that replaces placeholders with corresponding arguments."
+  },
+  {
+    "id": 757,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Positive",
+    "smell": "none",
+    "severity": "minor",
+    "reasoning": "The provided code snippet does not exhibit any code smells related to feature envy, large class, or data class. It is a simple method that logs updates and calls another method `doUpdate`. There are no issues with the code structure or design."
+  },
+  {
+    "id": 761,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Positive",
+    "smell": "none",
+    "severity": "minor",
+    "reasoning": "The code snippet is clean and follows good practices. It handles null checks, logs events, and performs conditional operations related to a specific service operation. There are no code smells present."
+  },
+  {
+    "id": 765,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Positive",
+    "smell": "none",
+    "severity": "minor",
+    "reasoning": "The code snippet appears to be a valid implementation of the hashCode method for a class that contains an array field named 'threads'. The use of `Arrays.deepHashCode` ensures that nested arrays are handled correctly, which is a good practice. There are no apparent code smells in this snippet."
+  },
+  {
+    "id": 769,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Positive",
+    "smell": "none",
+    "severity": "minor",
+    "reasoning": "The code snippet does not exhibit any obvious smells such as Feature Envy, Large Class, or Data Class. It is a standard implementation of the `hashCode` method for a class that encapsulates SSL/TLS configuration settings."
+  },
+  {
+    "id": 773,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Positive",
+    "smell": "none",
+    "severity": "minor",
+    "reasoning": "The method `writeVersion` is responsible for handling the serialization of an integer value. There are no code smells such as feature envy, large class, or data class present in this method."
+  },
+  {
+    "id": 783,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Positive",
+    "smell": "data_class",
+    "severity": "minor",
+    "reasoning": "The method `checkDeviceListLength` is closely tied to the `DeviceListResultImpl` class, which could indicate a dependency on data class concerns and make it harder to test or modify independently."
+  },
+  {
+    "id": 805,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": null,
+    "smell": null,
+    "severity": null,
+    "reasoning": "Model nonresponsive or returned invalid output."
+  },
+  {
+    "id": 812,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Positive",
+    "smell": "feature_envy",
+    "severity": "minor",
+    "reasoning": "The `getPageEncodingFromDirective` method is overly complex and tightly couples with the attribute extraction from `Attributes`. This could be a potential code smell as it mixes responsibilities (parsing attributes and determining encoding) within a single method. A cleaner approach might involve extracting these responsibilities into separate methods or classes."
+  },
+  {
+    "id": 819,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Positive",
+    "smell": "none",
+    "severity": "minor",
+    "reasoning": "The code snippet is clean and well-structured. It does not exhibit any code smells such as feature envy, large class, or data class design issues."
+  },
+  {
+    "id": 827,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Positive",
+    "smell": "none",
+    "severity": "minor",
+    "reasoning": "The code snippet does not exhibit any code smells, as it is clean and efficiently uses the `ArrayCache` to obtain an array of a specific size."
+  },
+  {
+    "id": 830,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Positive",
+    "smell": "none",
+    "severity": "minor",
+    "reasoning": "The code snippet is clean and does not exhibit any code smells. It checks if `packageAdmin` is null before attempting to use it, which prevents potential NullPointerExceptions."
+  },
+  {
+    "id": 852,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Positive",
+    "smell": "feature_envy",
+    "severity": "major",
+    "reasoning": "The method `getName()` is not just retrieving the name of an object but also merging two names if they exist. This introduces a dependency on the `lower` and `upper` objects, which makes it harder to test and maintain."
+  },
+  {
+    "id": 855,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Positive",
+    "smell": "large_class",
+    "severity": "minor",
+    "reasoning": "The `getApplicationToRun` method is large and performs multiple tasks: it configures the application to run, determines if an extension exists in the Eclipse Platform registry, retrieves configuration elements, and creates executable extensions. This could be refactored into separate methods for each task."
+  },
+  {
+    "id": 874,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Positive",
+    "smell": "none",
+    "severity": "minor",
+    "reasoning": "The code snippet you provided is a simple method to initialize a `BundleEvent` based on the state of a given `Bundle`. It does not exhibit any common smells such as feature envy, large class, or data class. The method is straightforward and follows a clear logic for creating different types of events based on bundle states."
+  },
+  {
+    "id": 877,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": null,
+    "smell": null,
+    "severity": null,
+    "reasoning": "Model nonresponsive or returned invalid output."
+  }
+]

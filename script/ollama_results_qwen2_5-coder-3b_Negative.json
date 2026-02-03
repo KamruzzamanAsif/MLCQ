@@ -1,0 +1,322 @@
+[
+  {
+    "id": 533,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Negative",
+    "smell": "large_class",
+    "severity": "major",
+    "reasoning": "The method `writeLength` is a god-class as it performs multiple different responsibilities. It calculates the length of an object based on various properties and byte sizes, which is a clear indication that this class is too large."
+  },
+  {
+    "id": 553,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Negative",
+    "smell": "large_class",
+    "severity": "minor",
+    "reasoning": "The method `getPropertyMapping` is overly complex and has multiple responsibilities. It retrieves properties for a given item type, handles caching, and performs recursive calls. This complexity increases the cognitive load on developers and can lead to bugs if not managed properly."
+  },
+  {
+    "id": 564,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": null,
+    "smell": null,
+    "severity": null,
+    "reasoning": "Model nonresponsive or returned invalid output."
+  },
+  {
+    "id": 566,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Negative",
+    "smell": "large_class",
+    "severity": "minor",
+    "reasoning": "The `adjustRelativePath` method has a significant number of responsibilities, including checking for null or empty paths, determining if the path is absolute, finding and verifying the existence of a file. This leads to an overly large class with poor cohesion."
+  },
+  {
+    "id": 570,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Negative",
+    "smell": "large_class",
+    "severity": "major",
+    "reasoning": "The `equals` method in the provided code snippet is part of a class that handles context resource links. This method checks for equality between two instances based on their fields, which includes both `factory` and `global`. The method has grown significantly in size due to its complexity in handling both cases where a field might be null or non-null. This makes the class overly complex and difficult to understand and maintain."
+  },
+  {
+    "id": 573,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Negative",
+    "smell": "large_class",
+    "severity": "minor",
+    "reasoning": "The code snippet is modifying the behavior of a superclass, which can lead to tight coupling and increased complexity. It involves checking if `manager` is an instance of `ClusterManagerBase`, creating a dynamic cast, and calling a method on it. This pattern violates the Single Responsibility Principle (SRP), as the class now has multiple responsibilities."
+  },
+  {
+    "id": 575,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Negative",
+    "smell": "large_class",
+    "severity": "minor",
+    "reasoning": "The method `setPerUserTestWhileIdle` is doing multiple things: it checks for initialization, handles null values, and modifies the map. This can lead to a large class with a lot of responsibilities."
+  },
+  {
+    "id": 577,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Negative",
+    "smell": "large_class",
+    "severity": "minor",
+    "reasoning": "The code snippet defines a static method `getText` which operates on a string and extracts text between `<TEXT>` and `</TEXT>` tags. This method is quite simple and focused, but the class it belongs to has grown larger than necessary because of this single functionality."
+  },
+  {
+    "id": 581,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Negative",
+    "smell": "large_class",
+    "severity": "minor",
+    "reasoning": "The provided code snippet appears to be the initialization method of a class, which is generally expected. However, it creates an instance of `Introspector` within this method, indicating that the class has responsibilities beyond its primary purpose of initialization. This might indicate that `Introspector` could be considered as a feature envy or data class if its functionality were not directly related to initialization."
+  },
+  {
+    "id": 613,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Negative",
+    "smell": "large_class",
+    "severity": "major",
+    "reasoning": "The `validateToken` method is excessively long and does multiple unrelated tasks: token validation, logging, principal retrieval, and cookie comparison. This violates the Single Responsibility Principle (SRP), making it a God Class."
+  },
+  {
+    "id": 617,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Negative",
+    "smell": "large_class",
+    "severity": "major",
+    "reasoning": "The method `setProperty` is too large and does multiple unrelated tasks: setting a system property and updating internal properties. A class should be focused on one task or set of related tasks."
+  },
+  {
+    "id": 622,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": null,
+    "smell": null,
+    "severity": null,
+    "reasoning": "Model nonresponsive or returned invalid output."
+  },
+  {
+    "id": 637,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": null,
+    "smell": null,
+    "severity": null,
+    "reasoning": "Model nonresponsive or returned invalid output."
+  },
+  {
+    "id": 641,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Negative",
+    "smell": "large_class",
+    "severity": "minor",
+    "reasoning": "The function `replaceSubstitution` is responsible for handling pattern matching, replacement, and repeat logic. It has become too large to be easily maintained or reused without significant changes. This can lead to code duplication, increased complexity, and difficulty in testing."
+  },
+  {
+    "id": 667,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Negative",
+    "smell": "large_class",
+    "severity": "minor",
+    "reasoning": "The method `equals` is doing too much. It's checking for equality, comparing instance variables, and performing a boolean check on an instance variable (`isAccessible`). This could be split into three separate methods for better readability and maintainability."
+  },
+  {
+    "id": 679,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Negative",
+    "smell": "large_class",
+    "severity": "minor",
+    "reasoning": "The `getSiblingIndexWithClassName` method has a large number of responsibilities and is tightly coupled to the DOM API. This makes it difficult to maintain and extend, which are hallmarks of a God Class."
+  },
+  {
+    "id": 683,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Negative",
+    "smell": "large_class",
+    "severity": "minor",
+    "reasoning": "The `toString` method is cluttered with multiple boolean fields, which makes it difficult to understand the purpose of the class and its responsibilities. Additionally, it lacks encapsulation since it directly accesses instance variables without proper getter methods."
+  },
+  {
+    "id": 693,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Negative",
+    "smell": "large_class",
+    "severity": "minor",
+    "reasoning": "The method `equals` is a common interface method for objects in Java, but it doesn't add any significant functionality to the class. It only checks equality based on two fields: `annotationType` and `type`. This method could be considered part of a larger utility or helper class rather than being directly attached to the `Key` class."
+  },
+  {
+    "id": 697,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Negative",
+    "smell": "large_class",
+    "severity": "major",
+    "reasoning": "The `replaceWith` method contains several responsibilities, including checking conditions, inserting elements, and removing the original element. This violates the Single Responsibility Principle (SRP), as a class should have only one reason to change. The method also mixes concerns of updating the DOM tree with error handling."
+  },
+  {
+    "id": 711,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Negative",
+    "smell": "large_class",
+    "severity": "major",
+    "reasoning": "This code is a God Class because it contains both grammar rules and parsing logic within the same class. A large class often leads to difficulty in understanding, maintenance, and testing."
+  },
+  {
+    "id": 713,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Negative",
+    "smell": "large_class",
+    "severity": "major",
+    "reasoning": "The code snippet is a method (`rule__MdCategory__Group_4_0__1__Impl`) that defines the grammar rules for parsing an MD category in a specific context. This method contains multiple responsibilities: it handles error reporting, stack management, and grammar rule application. A large class can be identified by its high level of complexity or lack of well-defined responsibilities, which increases the risk of bugs, maintenance difficulties, and potential code duplication."
+  },
+  {
+    "id": 723,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Negative",
+    "smell": "large_class",
+    "severity": "major",
+    "reasoning": "The method `get` is doing too many responsibilities. It handles HTTP status codes, JSON serialization, and handling the result handler in a single method. This violates the Single Responsibility Principle (SRP) and makes it difficult to maintain and extend."
+  },
+  {
+    "id": 738,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Negative",
+    "smell": "data_class",
+    "severity": "minor",
+    "reasoning": "The `toString` method is responsible for formatting a string representation of the object, which involves accessing private member variables (`_info` and `_callback`). This suggests that the class might be too large or should be broken down into smaller classes with more specific responsibilities."
+  },
+  {
+    "id": 742,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Negative",
+    "smell": "large_class",
+    "severity": "major",
+    "reasoning": "The `resolveGenericRef` method has a large number of responsibilities and is tightly coupled to the `GenericRef` class. It handles both direct type references and parameterized types, making it difficult to maintain and extend."
+  },
+  {
+    "id": 755,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Negative",
+    "smell": "data_class",
+    "severity": "minor",
+    "reasoning": "The method `format` is used to replace placeholders in a string with corresponding arguments. While it performs a useful function, it is too coupled to the format of strings and could be extracted into a separate class to better encapsulate its functionality."
+  },
+  {
+    "id": 757,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Negative",
+    "smell": "large_class",
+    "severity": "minor",
+    "reasoning": "The `updated` method in the code snippet is doing too much: it's not only updating properties but also logging debug messages and potentially handling exceptions. This makes the method larger than necessary and more difficult to maintain."
+  },
+  {
+    "id": 761,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Negative",
+    "smell": "large_class",
+    "severity": "major",
+    "reasoning": "The method `onKapuaEvent` is too long and performs multiple responsibilities. It handles event processing, logs information, checks for specific operations, and deletes groups based on the operation type."
+  },
+  {
+    "id": 765,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Negative",
+    "smell": "data_class",
+    "severity": "minor",
+    "reasoning": "This method is responsible for calculating the hash code of an object, which is a common requirement in Java. However, the code snippet uses `Arrays.deepHashCode`, which can be expensive if dealing with large arrays or complex objects. Additionally, the use of direct field access (`this.threads`) is not recommended as it bypasses encapsulation."
+  },
+  {
+    "id": 769,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Negative",
+    "smell": "large_class",
+    "severity": "minor",
+    "reasoning": "The `hashCode` method has a high number of fields and operations, indicating that it could be a large class. This method should focus on calculating the hash code based on essential properties rather than all fields."
+  },
+  {
+    "id": 773,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Negative",
+    "smell": "large_class",
+    "severity": "minor",
+    "reasoning": "The method `writeVersion` performs multiple tasks: it checks if the value is null, sets a flag to handle null serialization, writes a null value or the actual value, and then restores the previous null serialization setting. This method violates the Single Responsibility Principle by performing too many responsibilities."
+  },
+  {
+    "id": 783,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Negative",
+    "smell": "large_class",
+    "severity": "minor",
+    "reasoning": "The method `checkDeviceListLength` is too long and contains multiple responsibilities. It should be broken down into smaller, more focused methods."
+  },
+  {
+    "id": 805,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": null,
+    "smell": null,
+    "severity": null,
+    "reasoning": "Model nonresponsive or returned invalid output."
+  },
+  {
+    "id": 812,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Negative",
+    "smell": "large_class",
+    "severity": "minor",
+    "reasoning": "The function `getPageEncodingFromDirective` is performing multiple tasks: parsing a page encoding attribute, extracting a content type from a string, and determining an encoding based on the content type. This makes it difficult to understand and maintain the code."
+  },
+  {
+    "id": 819,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Negative",
+    "smell": "large_class",
+    "severity": "major",
+    "reasoning": "The code snippet is a large, monolithic method that performs multiple tasks related to retrieving logger levels. It does not encapsulate any specific functionality or adhere to the Single Responsibility Principle (SRP). This makes it difficult to maintain and modify, as changes to one part of the method may affect others."
+  },
+  {
+    "id": 827,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Negative",
+    "smell": "large_class",
+    "severity": "major",
+    "reasoning": "The class `RangeDecoderFromBuffer` is overly complex and contains multiple responsibilities. It is primarily responsible for managing the buffer allocation from the array cache, but also includes logic to initialize the position. This violates the Single Responsibility Principle, making it difficult to maintain and extend."
+  },
+  {
+    "id": 830,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Negative",
+    "smell": "large_class",
+    "severity": "major",
+    "reasoning": "The method `getFragments` is performing multiple tasks: it checks if `packageAdmin` is null and then calls a method from `packageAdmin`. This results in a class that does too many things, violating the Single Responsibility Principle (SRP). Additionally, there is no encapsulation or separation of concerns."
+  },
+  {
+    "id": 852,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Negative",
+    "smell": "large_class",
+    "severity": "major",
+    "reasoning": "The code snippet performs multiple unrelated tasks (lowering names, uppercasing them, and merging them) within a single method. This makes the class more complex, harder to test, and difficult to maintain."
+  },
+  {
+    "id": 855,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Negative",
+    "smell": "large_class",
+    "severity": "major",
+    "reasoning": "The method `getApplicationToRun` is too large and performs multiple unrelated tasks, including parsing command line arguments, launching an application based on a configuration, and managing Eclipse extensions. This makes the class inherently complex and difficult to maintain."
+  },
+  {
+    "id": 874,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Negative",
+    "smell": "large_class",
+    "severity": "minor",
+    "reasoning": "The `initializeEvent` method in the code snippet is a simple utility function that takes a bundle object and returns an event based on its state. It only contains conditional logic to determine which event to return, making it difficult to understand at a glance what this method does. This could be considered a minor smell because it doesn't directly violate any design principles, but it still makes the class appear larger than necessary."
+  },
+  {
+    "id": 877,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Negative",
+    "smell": "large_class",
+    "severity": "minor",
+    "reasoning": "This method is long and performs multiple actions: logging, activating a tab, selecting an item in a tree, and adding a variable. It should be refactored into smaller, more focused methods to improve readability and maintainability."
+  }
+]
