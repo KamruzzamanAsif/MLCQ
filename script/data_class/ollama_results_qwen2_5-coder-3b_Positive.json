@@ -1,0 +1,162 @@
+[
+  {
+    "id": 529,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Positive",
+    "smell": "large_class",
+    "severity": "minor",
+    "reasoning": "The `UnorderedPartitionedKVWriter` class is excessively large, with numerous methods and fields related to handling data, spill management, and event generation. This makes it difficult to understand the overall functionality of the component, and increases the risk of introducing bugs."
+  },
+  {
+    "id": 534,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Positive",
+    "smell": "none",
+    "severity": "minor",
+    "reasoning": "The provided code snippet is clean and free of significant flaws or smells. It follows proper naming conventions, uses appropriate data structures, and includes necessary error handling."
+  },
+  {
+    "id": 537,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Positive",
+    "smell": "large_class",
+    "severity": "major",
+    "reasoning": "The class `RequestSecurityManagerImpl` is very large and complex, with multiple responsibilities. It handles both security checks for requests and redirects, as well as provides methods to determine the security of pages and links. This can lead to high coupling between different functionalities and make it difficult to maintain and extend."
+  },
+  {
+    "id": 539,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Positive",
+    "smell": "none",
+    "severity": "minor",
+    "reasoning": "The code snippet is clean and follows best practices. The class `AbstractConditional` is not overly complex, does not contain any data classes or feature envy, and its methods are well-organized."
+  },
+  {
+    "id": 547,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Positive",
+    "smell": "none",
+    "severity": "none",
+    "reasoning": "The code snippet provided does not exhibit any code smells. It is a simple and clear abstract class definition in Java, which is suitable for the intended purpose of handling property change events in an element system. There are no issues with data classes, feature envy, large classes, or other common code smells."
+  },
+  {
+    "id": 550,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Positive",
+    "smell": "large_class",
+    "severity": "minor",
+    "reasoning": "The `TrimAction` class contains a significant amount of functionality, including handling annotations, determining type membership, and updating the RutaStream. This makes it complex to maintain and read."
+  },
+  {
+    "id": 555,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Positive",
+    "smell": "large_class",
+    "severity": "major",
+    "reasoning": "The class `MailChimpServiceImpl` is excessively large, containing numerous methods and fields. This can make the code hard to maintain and understand. Consider refactoring the class into smaller, more focused classes or breaking down complex logic."
+  },
+  {
+    "id": 557,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Positive",
+    "smell": "large_class",
+    "severity": "minor",
+    "reasoning": "The `SessionAttributeElement` class is large, primarily due to its handling of session attributes and the complexity of checking for session existence and retrieving values. This can make it difficult to maintain and extend in the future."
+  },
+  {
+    "id": 559,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Positive",
+    "smell": "none",
+    "severity": "none",
+    "reasoning": "The provided code snippet is a simple Java class definition for an exception called `ChannelConfigException`. It extends the `ChannelException` and includes a constructor that takes a message and initializes it. There are no code smells, large classes, or feature envy in this code."
+  },
+  {
+    "id": 560,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Positive",
+    "smell": "none",
+    "severity": "none",
+    "reasoning": "The code snippet provided is clean and does not contain any code smells. It is a simple implementation of the `ITableLabelProvider` interface for displaying document data in a table, with icons based on evaluation results."
+  },
+  {
+    "id": 569,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Positive",
+    "smell": "none",
+    "severity": "none",
+    "reasoning": "The provided code snippet is clean and follows the standard interface pattern. There are no code smells such as data class, feature envy, or large class."
+  },
+  {
+    "id": 579,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Positive",
+    "smell": "none",
+    "severity": "minor",
+    "reasoning": "The code snippet does not exhibit any common code smells such as Data Class, Feature Envy, Large Class, or No Reasoning Smells. It is a simple implementation of an ActionListener interface that handles file saving and status updates for a MainFrame class."
+  },
+  {
+    "id": 583,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Positive",
+    "smell": "none",
+    "severity": "none",
+    "reasoning": "The provided code snippet is clean, free of obvious code smells. It follows good practices by encapsulating logic within classes and methods, using clear naming conventions, and maintaining a consistent structure."
+  },
+  {
+    "id": 586,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Positive",
+    "smell": "none",
+    "severity": "none",
+    "reasoning": "The code snippet does not contain any common code smells such as data classes, feature envy, or large classes. It is a simple constructor for a class that extends another class and adds an error message to it."
+  },
+  {
+    "id": 589,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Positive",
+    "smell": "none",
+    "severity": "minor",
+    "reasoning": "The interface `SearchByEdgeType` is well-designed and has a clear structure with appropriate methods for interacting with an edge's properties. There are no code smells present, such as data class, feature envy, large class issues."
+  },
+  {
+    "id": 593,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Positive",
+    "smell": "none",
+    "severity": "none",
+    "reasoning": "The code snippet provided is a valid and clean implementation of a job scheduler service. There are no known code smells, such as data class, feature envy, or large class issues."
+  },
+  {
+    "id": 599,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Positive",
+    "smell": "none",
+    "severity": "minor",
+    "reasoning": "The code snippet is a valid abstract class extending `java.awt.GraphicsConfiguration` and provides placeholder implementations for two methods introduced in JDK 1.4 and JDK 1.5. It is designed to be extended by concrete classes that will provide the actual implementation of these methods."
+  },
+  {
+    "id": 601,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Positive",
+    "smell": "large_class",
+    "severity": "major",
+    "reasoning": "The class `ShortArrayFSImpl` is excessively large, containing methods for all basic array operations (get, set, copyFromArray, etc.). It should be broken down into smaller, more focused classes or interfaces to reduce its complexity and improve maintainability."
+  },
+  {
+    "id": 603,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Positive",
+    "smell": "none",
+    "severity": "minor",
+    "reasoning": "The code is clean and follows standard Java conventions for creating a resource bundle in XSLTC, so no data class or feature envy smells are present. The class also does not appear to be overly large or complex."
+  },
+  {
+    "id": 607,
+    "model": "qwen2.5-coder:3b",
+    "prompt_strategy": "Positive",
+    "smell": "large_class",
+    "severity": "major",
+    "reasoning": "This class, `ExsltBase`, contains two distinct and related functionalities: converting a Node to a string and converting it to a number. These functionalities are tightly coupled and could benefit from being split into separate classes or methods."
+  }
+]

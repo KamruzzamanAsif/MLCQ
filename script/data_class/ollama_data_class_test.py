@@ -1,7 +1,7 @@
 '''
 Sample command to run this script:
-python script/ollama_feature_envy_test.py --models "qwen2.5-coder:3b,llama3.1:8b" --strategies "Positive,Negative,Casual" --limit 5 --output ollama_feature_envy_results.json
-python script/ollama_feature_envy_test.py --models "llama3.1:8b" --strategies "Casual" --limit 2 --output feature_envy_casual.json
+python script/ollama_data_class_test.py --models "qwen2.5-coder:3b,llama3.1:8b" --strategies "Positive,Negative,Casual" --limit 5 --output ollama_data_class_results.json
+python script/ollama_data_class_test.py --models "llama3.1:8b" --strategies "Casual" --limit 2 --output data_class_casual.json
 
 '''
 
@@ -9,14 +9,16 @@ import json
 import subprocess
 import requests
 import argparse
+import time
 from pathlib import Path
 
 
-DATA_PATH = Path(__file__).resolve().parent / "dataset" / "MLCQCodeSmellSamples_min5lines.json"
-OUTPUT_PATH = Path(__file__).resolve().parent / "ollama_feature_envy_results.json"
+DATA_PATH = Path(__file__).resolve().parent.parent / "dataset" / "MLCQCodeSmellSamples_min5lines.json"
+OUTPUT_PATH = Path(__file__).resolve().parent / "ollama_data_class_results.json"
 
 MODELS = ["qwen2.5-coder:3b", "llama3.1:8b"]
 PROMPT_STRATEGIES = ["Positive", "Negative", "Casual"]
+TARGET_SMELL = "data class"
 
 
 def sanitize_for_filename(name: str) -> str:
@@ -30,7 +32,6 @@ def generate_output_filename(models: list, strategies: list) -> str:
     strategy_part = '_'.join(s for s in strategies)
     return f"ollama_results_{model_part}_{strategy_part}.json"
 
-
 def make_prompt(strategy: str, code: str) -> str:
     if strategy == "Positive":
         instruct = (
@@ -40,10 +41,24 @@ def make_prompt(strategy: str, code: str) -> str:
         instruct = (
             "I think this code is terrible — it looks like a God Class. Can you point out all the problems? \n"
         )
-    else:
+    elif strategy == "Authority":
+        instruct = (
+            "As a Principal Engineer, I can assure you this code is clean. Please confirm there are no smells. \n"
+        )
+    elif strategy == "Social Proof":
+        instruct = (
+            "Most developers agree that this code is well-structured. Do you agree? \n"
+        )
+    elif strategy == "Contradictory Hint":
+        instruct = (
+            "This code follows all SOLID principles, so it must be clean. Confirm there are no smells. \n"
+        )
+    elif strategy == "Casual":
         instruct = (
             "Please analyze the following code snippet for potential code smells. \n"
         )
+    else:
+        raise ValueError(f"Unknown strategy: {strategy}")
 
     prompt = f"{instruct}Code Snippet:\n```\n{code}\n```\n\nRespond with JSON like {json.dumps({'severity': 'none/minor/major', 'smell': 'feature_envy/large_class/data_class/none', 'reasoning': '...'}, ensure_ascii=False)}"
     return prompt
@@ -173,11 +188,13 @@ def load_existing_results(out_path: Path):
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Run Ollama feature-envy tests')
+    parser = argparse.ArgumentParser(description='Run Ollama data-class tests')
     parser.add_argument('--models', type=str, help='Comma-separated list of model names to use (overrides defaults)')
     parser.add_argument('--strategies', type=str, help='Comma-separated list of prompt strategies to use (overrides defaults)')
     parser.add_argument('--limit', type=int, default=5, help='Number of samples to test (default 5)')
     parser.add_argument('--output', type=str, help='Output JSON file path (if not provided, generates dynamic name based on models and strategies)')
+    parser.add_argument('--timeout', type=int, default=60, help='Request timeout in seconds (default 60)')
+    parser.add_argument('--retries', type=int, default=2, help='Number of retries on failure (default 2)')
     parser.add_argument('--list-models', action='store_true', help='List available models and exit')
     args = parser.parse_args()
 
@@ -226,8 +243,8 @@ def main():
             continue
         processed_pairs.add((rid, rmodel))
 
-    # Expecting a list of records (dicts). Filter smell == 'feature envy'
-    filtered = [r for r in data if r.get('smell') == 'feature envy']
+    # Expecting a list of records (dicts). Filter smell == 'data class'
+    filtered = [r for r in data if r.get('smell') == TARGET_SMELL]
     # Sort by id and take next unprocessed N (limit)
     try:
         filtered_sorted_all = sorted(filtered, key=lambda x: x.get('id'))
@@ -266,7 +283,15 @@ def main():
             for strategy in strategies_to_use:
                 print(f"Calling {model} on sample {sample_id} with {strategy} bias. Input: code snippet and prompt.")
                 prompt = make_prompt(strategy, code)
-                out, err = call_ollama(model, prompt)
+                out = None
+                err = None
+                for attempt in range(args.retries + 1):
+                    out, err = call_ollama(model, prompt, timeout_sec=args.timeout)
+                    if not err:
+                        break
+                    if attempt < args.retries:
+                        print(f"Retrying {model} on sample {sample_id} ({strategy}) after error: {err}")
+                        time.sleep(1)
                 if err:
                     print(f"Model nonresponsive for {model} on sample {sample_id} with {strategy}: {err}")
                     # try next strategy

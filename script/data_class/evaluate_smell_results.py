@@ -141,7 +141,7 @@ def main() -> None:
     parser.add_argument(
         "--dataset",
         type=str,
-        default=str(Path(__file__).resolve().parent / "dataset" / "MLCQCodeSmellSamples_min5lines.json"),
+        default=str(Path(__file__).resolve().parent.parent / "dataset" / "MLCQCodeSmellSamples_min5lines.json"),
         help="Path to dataset JSON with ground truth smell labels",
     )
     parser.add_argument(
